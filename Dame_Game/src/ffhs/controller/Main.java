@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 /**
@@ -23,6 +25,8 @@ public class Main extends Application {
     private StartGameMenuController startGameMenuController;
 
     private Stage primaryStage;
+
+    private Stage rulesStage;
 
 
     /**
@@ -52,6 +56,7 @@ public class Main extends Application {
         loadRootMenuLayout();
         loadStartLayout();
         setStartLayout();
+        loadRulesWindow();
 
         primaryStage.show();
 
@@ -106,5 +111,39 @@ public class Main extends Application {
         menuBarPane.setCenter(startLayout);
         this.primaryStage.setResizable(true);
         menuBarController.disableReturnItem(true);
+    }
+
+    /**
+     * Loads the Rules Window
+     * The rules will be in a separate window.
+     * the game window will be visible.
+     * The Rules WIndow is a Utility-Window ({@link StageStyle}).
+     */
+    private void loadRulesWindow() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/RulesWindow.fxml"));
+            Parent rulesScene = loader.load();
+
+            rulesStage = new Stage(StageStyle.UTILITY);
+            rulesStage.setTitle("Game Rules");
+            rulesStage.setResizable(false);
+            rulesStage.setScene(new Scene(rulesScene));
+            rulesStage.sizeToScene();
+
+            ((RulesWindowController)loader.getController()).setObjects(rulesStage);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * open the Rules Window.
+     *
+     */
+    public void showRulesWindow() {
+        rulesStage.show();
     }
 }

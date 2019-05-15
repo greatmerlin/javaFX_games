@@ -38,4 +38,12 @@ public class MenuBarController {
 
         menuItem_back.setDisable(disable);
     }
+
+    /**
+     * handle the click to "Rules" {@link MenuItem} .
+     */
+    @FXML
+    private void handleRules() {
+        control.showRulesWindow();
+    }
 }
