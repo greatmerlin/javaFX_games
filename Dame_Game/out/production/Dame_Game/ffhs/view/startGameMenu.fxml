@@ -34,7 +34,7 @@
                 <Separator />
                 <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="20.0">
                     <children>
-                        <Label text="Names:" />
+                        <Label text="Player Names:" />
                         <VBox prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
                             <children>
                                 <Label text="Player1">
