@@ -1,5 +1,7 @@
 package ffhs.controller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
@@ -10,14 +12,13 @@ import javafx.scene.control.MenuItem;
 
 public class MenuBarController {
 
-
     /**
      * Main Class Object
      * */
     private Main control;
 
     @FXML
-    MenuItem menuItem_back;
+    private MenuItem menuItem_back;
 
     /**
      * Method to hand over objects.
@@ -52,5 +53,13 @@ public class MenuBarController {
     @FXML
     private void handleAbout() {
         control.showAboutWindow();
+    }
+
+    /**
+     * handle the exit
+     * */
+    @FXML
+    private void handleExit(ActionEvent event) {
+        Platform.exit();
     }
 }
