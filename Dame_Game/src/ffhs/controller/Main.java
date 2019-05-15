@@ -89,6 +89,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/startGameMenu.fxml"));
             startLayout = loader.load();
+
             startGameMenuController = loader.getController();
             startGameMenuController.setObjects(this);
         }
