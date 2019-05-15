@@ -35,15 +35,22 @@ public class MenuBarController {
      * @param disable Flag, if the {@link MenuItem} should be disabled or not.
      */
     public void disableReturnItem(boolean disable) {
-
         menuItem_back.setDisable(disable);
     }
 
     /**
-     * handle the click to "Rules" {@link MenuItem} .
+     * handle the click to "Rules" {@link MenuItem}.
      */
     @FXML
     private void handleRules() {
         control.showRulesWindow();
+    }
+
+    /**
+     * handle the click to "About" {@link MenuItem}.
+     * */
+    @FXML
+    private void handleAbout() {
+        control.showAboutWindow();
     }
 }

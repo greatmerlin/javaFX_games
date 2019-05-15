@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane onMouseClicked="#close" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: white;"
+            xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
+            fx:controller="ffhs.controller.AboutWindowController">
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="8.0"
+              AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../resources/logo-ffhs.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </VBox>
+        <Label fx:id="label_info" layoutX="21.0" layoutY="156.0" prefHeight="236.0" prefWidth="272.0"
+               textAlignment="CENTER" wrapText="true"
+               AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="150.0" />
+    </children>
+</AnchorPane>

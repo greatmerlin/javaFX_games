@@ -27,6 +27,7 @@ public class Main extends Application {
     private Stage primaryStage;
 
     private Stage rulesStage;
+    private Stage aboutStage;
 
 
     /**
@@ -57,6 +58,7 @@ public class Main extends Application {
         loadStartLayout();
         setStartLayout();
         loadRulesWindow();
+        loadAboutPane();
 
         primaryStage.show();
 
@@ -145,5 +147,42 @@ public class Main extends Application {
      */
     public void showRulesWindow() {
         rulesStage.show();
+    }
+
+    /**
+     * Loads the About Window
+     * The About Scene will be displayed as a separate Window
+     * The separate Window is a Utility-Window ({@link StageStyle}), the size can not be changed and
+     * it remains at the front stage.
+     */
+    private void loadAboutPane() {
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/AboutWindow.fxml"));
+            Parent aboutPane = loader.load();
+
+
+            aboutStage = new Stage(StageStyle.UTILITY);
+            aboutStage.setAlwaysOnTop(true);
+            aboutStage.setTitle("About Dame");
+            aboutStage.setResizable(false);
+            aboutStage.setScene(new Scene(aboutPane));
+            aboutStage.sizeToScene();
+
+            ((AboutWindowController)loader.getController()).setObjects(aboutStage);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Opens the About Window
+     *
+     * */
+    public void showAboutWindow() {
+
+        aboutStage.show();
     }
 }

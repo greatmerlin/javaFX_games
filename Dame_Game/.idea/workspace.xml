@@ -18,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ffhs/controller/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="686">
-              <caret line="110" column="41" selection-start-line="110" selection-start-column="30" selection-end-line="110" selection-end-column="41" />
+            <state relative-caret-position="378">
+              <caret line="180" column="12" selection-start-line="180" selection-start-column="12" selection-end-line="180" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3966#3967#0" expanded="true" />
@@ -30,9 +30,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ffhs/view/AboutWindow.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ffhs/controller/AboutWindowController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="46" column="112" selection-start-line="46" selection-start-column="112" selection-end-line="46" selection-end-column="112" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/resources/Rules.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="521" selection-start-line="17" selection-start-column="521" selection-end-line="17" selection-end-column="521" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ffhs/controller/RulesWindowController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
+            <state relative-caret-position="663">
               <caret line="70" column="18" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -62,14 +93,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ffhs/view/MenuBar.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="86" lean-forward="true" selection-start-line="23" selection-start-column="82" selection-end-line="23" selection-end-column="89" />
+            <state relative-caret-position="180">
+              <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ffhs/controller/MenuBarController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="765">
+              <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#418#419#0" expanded="true" />
+                <element signature="e#456#457#0" expanded="true" />
+                <element signature="e#739#740#0" expanded="true" />
+                <element signature="e#788#789#0" expanded="true" />
+                <element signature="e#902#903#0" expanded="true" />
+                <element signature="e#943#944#0" expanded="true" />
+                <element signature="e#1063#1064#0" expanded="true" />
+                <element signature="e#1104#1105#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -80,15 +131,6 @@
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ffhs/controller/StartGameMenuController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-            </state>
-          </provider>
         </entry>
       </file>
     </leaf>
@@ -111,12 +153,15 @@
         <option value="$PROJECT_DIR$/src/ffhs/View/startGameMenu.fxml" />
         <option value="$PROJECT_DIR$/src/ffhs/view/styles.css" />
         <option value="$PROJECT_DIR$/src/ffhs/view/startGameMenu.fxml" />
-        <option value="$PROJECT_DIR$/src/ffhs/controller/MenuBarController.java" />
         <option value="$PROJECT_DIR$/src/ffhs/controller/StartGameMenuController.java" />
-        <option value="$PROJECT_DIR$/src/ffhs/controller/Main.java" />
         <option value="$PROJECT_DIR$/src/ffhs/view/RulesWindow.fxml" />
         <option value="$PROJECT_DIR$/src/ffhs/controller/RulesWindowController.java" />
+        <option value="$PROJECT_DIR$/src/ffhs/controller/Main.java" />
+        <option value="$PROJECT_DIR$/src/ffhs/view/AboutWindow.fxml" />
+        <option value="$PROJECT_DIR$/src/ffhs/controller/MenuBarController.java" />
         <option value="$PROJECT_DIR$/src/ffhs/view/MenuBar.fxml" />
+        <option value="$PROJECT_DIR$/src/ffhs/controller/AboutWindowController.java" />
+        <option value="$PROJECT_DIR$/src/resources/Rules.txt" />
       </list>
     </option>
   </component>
@@ -240,12 +285,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1557882814221</updated>
-      <workItem from="1557882816744" duration="23561000" />
+      <workItem from="1557882816744" duration="27811000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23561000" />
+    <option name="totallyTimeSpent" value="27811000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
@@ -293,18 +338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ffhs/controller/MenuBarController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#331#332#0" expanded="true" />
-            <element signature="e#369#370#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ffhs/view/startGameMenu.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -320,14 +353,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ffhs/controller/RulesWindowController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="70" column="18" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#554#555#0" expanded="true" />
+            <element signature="e#593#594#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ffhs/controller/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="110" column="41" selection-start-line="110" selection-start-column="30" selection-end-line="110" selection-end-column="41" />
+        <state relative-caret-position="378">
+          <caret line="180" column="12" selection-start-line="180" selection-start-column="12" selection-end-line="180" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3966#3967#0" expanded="true" />
             <element signature="e#3999#4000#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ffhs/view/MenuBar.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ffhs/controller/MenuBarController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#418#419#0" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+            <element signature="e#739#740#0" expanded="true" />
+            <element signature="e#788#789#0" expanded="true" />
+            <element signature="e#902#903#0" expanded="true" />
+            <element signature="e#943#944#0" expanded="true" />
+            <element signature="e#1063#1064#0" expanded="true" />
+            <element signature="e#1104#1105#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -340,25 +411,30 @@
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ffhs/controller/RulesWindowController.java">
+    <entry file="file://$PROJECT_DIR$/src/ffhs/view/AboutWindow.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="18" />
+        <state relative-caret-position="405">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ffhs/controller/AboutWindowController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="46" column="112" selection-start-line="46" selection-start-column="112" selection-end-line="46" selection-end-column="112" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#554#555#0" expanded="true" />
-            <element signature="e#593#594#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ffhs/view/MenuBar.fxml">
+    <entry file="file://$PROJECT_DIR$/src/resources/Rules.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="86" lean-forward="true" selection-start-line="23" selection-start-column="82" selection-end-line="23" selection-end-column="89" />
+        <state relative-caret-position="255">
+          <caret line="17" column="521" selection-start-line="17" selection-start-column="521" selection-end-line="17" selection-end-column="521" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
   </component>
 </project>

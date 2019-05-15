@@ -22,9 +22,7 @@
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Rules" onAction="#handleRules" />
-<!--                        action for the rules: onAction="#handleRules"-->
-                        <MenuItem mnemonicParsing="false" text="About" />
-<!--                        action on about: onAction="#handleAbout"-->
+                        <MenuItem mnemonicParsing="false" text="About" onAction="#handleAbout" />
                     </items>
                 </Menu>
             </menus>
