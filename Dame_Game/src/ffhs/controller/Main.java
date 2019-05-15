@@ -45,22 +45,38 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         this.primaryStage = primaryStage;
+
         primaryStage.setTitle("Dame Game");
         primaryStage.setOnCloseRequest(event -> Platform.exit());
 
-        initMenuLayout();
+        loadRootMenuLayout();
         loadStartLayout();
         setStartLayout();
 
-
-
-//        Parent root = FXMLLoader.load(getClass().getResource("../view/startGameMenu.fxml"));
-//        Scene mainMenuScene = new Scene(root, 800,600);
-//        primaryStage.setScene(mainMenuScene);
-
-
         primaryStage.show();
 
+    }
+
+    /**
+     * loads the Menu Bar (the MenuBar.fxml)
+     * The MenuBar is on a BorderPane. At the top part, there are 2 options, File and Help..
+     * The middle part is empty, so that we can add more items later on, if we want to.
+     * Menu will always remain visible.
+     */
+    private void loadRootMenuLayout() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/MenuBar.fxml"));
+            menuBarPane = loader.load();
+
+            menuBarController = loader.getController();
+            menuBarController.setObjects(this);
+
+            primaryStage.setScene(new Scene(menuBarPane));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -81,28 +97,9 @@ public class Main extends Application {
         }
     }
 
-    /**
-     * loads the Menu Bar (the MenuBar.fxml)
-     * The MenuBar is on a BorderPane. At the top part, there are 2 options, File and Help..
-     * The middle part is empty, so that we can add more items later on, if we want to.
-     * Menu will always remain visible.
-     */
-    private void initMenuLayout() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/MenuBar.fxml"));
-            menuBarPane = loader.load();
-            primaryStage.setScene(new Scene(menuBarPane));
-            menuBarController = loader.getController();
-            menuBarController.setObjects(this);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
-     * The start Scene will be placed at the "Center" ({@link BorderPane#center}) of the Menu Scene.
+     * The start Scene will be placed at the "Center" ({@link BorderPane -> center}) of the Menu Scene.
      */
     private void setStartLayout() {
         menuBarPane.setCenter(startLayout);

@@ -12,7 +12,13 @@ public class StartGameMenuController {
      */
     private Main control;
 
+    /**
+     * Method to hand over the objects.
+     *
+     * @param control Main Class object.
+     */
     public void setObjects(Main control) {
+
         this.control = control;
     }
 }

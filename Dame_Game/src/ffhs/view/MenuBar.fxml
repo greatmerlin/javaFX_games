@@ -16,6 +16,7 @@
                         <MenuItem fx:id="menuItem_back" disable="true" mnemonicParsing="false" text="Back" />
 <!--                        action for the back: onAction="#handleBack"-->
                         <MenuItem fx:id="menuItem_exit" mnemonicParsing="false" text="Exit"/>
+<!--                        action for exit: onAction="#handleExit"-->
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
