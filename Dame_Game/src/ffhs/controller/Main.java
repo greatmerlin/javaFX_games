@@ -44,7 +44,7 @@ public class Main extends Application {
      * loads the main Stage and sets up the main window.
      * Initialize every game object
      *
-     * @param primaryStage Oberflächen Fenster
+     * @param primaryStage the main Window
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -58,7 +58,7 @@ public class Main extends Application {
         loadStartLayout();
         setStartLayout();
         loadRulesWindow();
-        loadAboutPane();
+        loadAboutWindow();
 
         primaryStage.show();
 
@@ -155,7 +155,7 @@ public class Main extends Application {
      * The separate Window is a Utility-Window ({@link StageStyle}), the size can not be changed and
      * it remains at the front stage.
      */
-    private void loadAboutPane() {
+    private void loadAboutWindow() {
 
         try {
             FXMLLoader loader = new FXMLLoader();
