@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Steuerung von Aktionen die während des Spielens vorkommen.
- *
- * @author Alexander Hengsteler
- * @author Joel Schmid
+ * Control from the in-game Actions.
  */
 public class Game {
 
@@ -33,7 +30,7 @@ public class Game {
     }
 
     /**
-     * spiel wird zurückgesetzt.
+     * The Game will be restarted.
      */
     public void reset() {
         possibleFields.clear();
@@ -41,10 +38,10 @@ public class Game {
     }
 
     /**
-     * ermittelt, ob f ein leeres Feld ist.
+     * determine if f is an empty field
      *
-     * @param f Feld
-     * @return ist auf f ein Stein
+     * @param f Field
+     * @return is there in f a token
      */
     private boolean emptyField(Field f) {
         return !playerController.getCurrentPlayer().hasStoneAt(f.getIndexX(), f.getIndexY()) &&
@@ -52,18 +49,17 @@ public class Game {
     }
 
     /**
-     * ermittelt die Felder, die vom Feld(x,y) erreichbar sind.
+     * determines the fields(x,y) that can be reached form this position.
      *
-     * @author Joel Schmid
      * @see #testFieldScope(Field, Color, boolean, boolean)
-     * @param x aktuelle X-Koordinate
-     * @param y aktuelle Y-Koordinate
-     * @param indexX wie weit von X entfernnt
-     * @param indexY wie weit von Y entfernnt
-     * @param indexX2 x + indexX2 ist Zielkoordinate, wenn x + indexX ein gegnerischer Stein ist
-     * @param indexY2 y + indexY2 ist Zielkoordinate, wenn y + indexY ein gegnerischer Stein ist
-     * @param further ist dies bereits ein weiterer zug, oder noch der erste. Beim ersten Zug wäre es möglich, nur ein Feld weiter zu gehen. Bei weiteren Zügen muss geschlagen werden.
-     * @return suche nach weiteren Feldern in dieser Richtung abbrechen
+     * @param x actuell X-Coordinate
+     * @param y actuell Y-Coordinate
+     * @param indexX dustance from X
+     * @param indexY distance from Y
+     * @param indexX2 x + indexX2 is goal-coordinate, if x + indexX is an opponent token.
+     * @param indexY2 y + indexY2 ist goal-coordinate, if y + indexY is an opponent token.
+     * @param further if this the  first turn or not. At the first turn you can do only one movement.
+     * @return search further fields tot test
      */
     private boolean testField(int x, int y, int indexX, int indexY, int indexX2, int indexY2, boolean further) {
         Field field = Main.playingField.getField(x + indexX, y + indexY);
@@ -88,14 +84,13 @@ public class Game {
     }
 
     /**
-     * Ausgehend von f werden die möglichen Zielfelder ermittelt.
+     * determine the goal-fields from f.
      *
-     * @author Joel Schmid
      * @see #testField(int, int, int, int, int, int, boolean)
      * @param f Startfeld
-     * @param c Spielerfarbe
-     * @param further Wurde bereits ein gegnerischer Stein in diesem Zug übersprungen (es kann dann nur weitergemacht werden, wenn ein weiterer Stein geschlagen werden kann)
-     * @param superDame ist der Stein eine Superdame
+     * @param c Players color
+     * @param further Was an opponent's token hit in this turn
+     * @param superDame is the token a KING/Queen/SuperDame
      */
     private void testFieldScope(Field f, Color c, boolean further, boolean superDame) {
         if(superDame){
@@ -131,11 +126,11 @@ public class Game {
     }
 
     /**
-     * Führt eine passende Option für den angeklickten Stein aus.
-     * Wenn der Stein bereits der Stein zu dem aktuellen Move ist, wird der Stein wieder abgewählt, also der Move auf veraltet gesetzt ({@link Move#setOutdated(boolean)}).
-     * <br>Ein neuer Move mit dem gewählten Stein wird aufgebaut.
+     * makes an options for the selected field.
+     * If the token is the selected one, then the move will be done ({@link Move#setOutdated(boolean)}).
+     * A new move with the selected token will be made.
      *
-     * @param s angeklickter Stein
+     * @param s selected token
      */
     public void selectStone(Stone s) {
         if (move != null && move.getStone() == s && !move.isOutdated() && Main.playingField.getField(s.getIndexX(), s.getIndexY()) != currentField) {
@@ -160,12 +155,11 @@ public class Game {
     }
 
     /**
-     * Führt eine passende Aktion für das angeklickte Feld aus.
-     * Wenn durch das angeglickte Feld, ein anderes Feld übersprungen wird, wird ermittelt, auf welchen übersprungenen Feld
-     * der gegnerische Stein liegt. Dieses Feld wird als skippedField zum Move hinzugefügt.
-     * Sobald von dem angeglickten Feld kein weiterer Zug mehr möglich ist wird der aufgebaute {@link Move} ausgeführt. ({@link #makeMove(Move)})
+     * makes an action for the selected field
+     * If the token skips a filed, it determines the skipped field and where a token is.
+     * if a move can be made then the {@link Move} will be activated. ({@link #makeMove(Move)})
      *
-     * @param f angeklicktes Feld
+     * @param f selected Field
      */
     public void selectField(Field f) {
         if (move != null && !move.isOutdated()) {
@@ -225,9 +219,9 @@ public class Game {
     }
 
     /**
-     * Ein Spielzug wird ausgeführt.
+     * a movement will be done
      *
-     * @param move Spielzug
+     * @param move Player's move
      */
     private void makeMove(Move move) {
         gamePaneController.colorField();
@@ -238,7 +232,7 @@ public class Game {
     }
 
     /**
-     * Überprüft nach Beenden des Zuges, ob ein Spieler gewonnen hat und wechselt den aktuellen Spieler, wenn dies nicht der Fall ist.
+     * Checks after the turn if the player won, else it is the other players turn to play
      */
     public void finishedMove() {
         if (!testForWinner()) {
@@ -250,9 +244,9 @@ public class Game {
     }
 
     /**
-     * Ist der Stein s an der gegnerischen Grundlinie angekommen, wird er zur Superdame.
+     * If the token reaches the right point will be KING/Queen/SuperDame
      *
-     * @param s Stein der getestet wird.
+     * @param s token that will be tested
      */
     private void testForSuperDame(Stone s) {
         if (s.getColor() == Color.BLACK) {
@@ -266,9 +260,9 @@ public class Game {
     }
 
     /**
-     * hat ein Spieler bereits gewonnen
+     * has the player already won
      *
-     * @return {@code true} falls ein Spieler gewonnen hat. Dann kann das Spiel beendet werden.
+     * @return {@code true} if a player has won, can the game end
      */
     private boolean testForWinner() {
         if (!isMovePossible(playerController.getOtherPlayer())) {
@@ -279,10 +273,10 @@ public class Game {
     }
 
     /**
-     * ist ein Spielzug des Spielers p möglich
+     * is the Movement from a player possible
      *
-     * @param p Spieler
-     * @return gibt es einen möglichen Spielzug
+     * @param p Player
+     * @return returns a possible movement
      */
     private boolean isMovePossible(Player p) {
         for (Stone s : p.getStones()) {
@@ -298,12 +292,12 @@ public class Game {
     }
 
     /**
-     * Im einzelspielermodus wird die KI ausgeführt, im Mehrspielermodus wird nichts gemacht
+     * In SinglePlayer Mode an AI will be added , in Multiplayer nothing will be done.
      */
     private void playKI() {
         if(playerController.isSinglePlayerGame() && !playerController.isCurrentPlayer1()) {
             try {
-                Move m = ((KI) playerController.getPlayer2()).getBestMove();
+                Move m = ((AI) playerController.getPlayer2()).getBestMove();
                 makeMove(m);
             } catch (NoPossibleMoveException e) {
                 control.winDialog(playerController.getPlayer1().getName());

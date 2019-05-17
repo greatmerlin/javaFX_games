@@ -38,6 +38,13 @@ public class Main extends Application {
 
     public static PlayingField playingField;
 
+    private GameWindowController gameWindowController;
+
+    private Image king;
+    private Image logo;
+
+    private Game game;
+
 
     /**
      * Main Method starts the Application.
@@ -195,42 +202,43 @@ public class Main extends Application {
         aboutStage.show();
     }
 
+    //-------------------------------------------------------------------------------------------
+
     /**
-     * startet ein Spiel.
-     * Dazu wird das Spielfeld neu generiert und an den GamePaneController übergeben, der
-     * dieses Spielfeld grafisch darstellt. Der PlayerController wird neu initialisiert und generiert die neuen Spieler.
-     * Die neuen Spieler werden wieder an den gamePaneController übergeben, sodasss die Steine der Spieler garfisch dargestellt
-     * werden können.
+     * starts a Game
+     * A new PLayingField will be generated and given to the Controller.
+     * The Controller will give it "flesh and bones". The PlayerController will initialize and generate the 2 players.
+     * The new players will be given again to the game controller to get their tokens.
      *
-     * @param ki gibt an, ob es sich um ein Single- (ki = true) oder Multiplayer-Spiel handelt
-     * @param name1 Der Name von Spieler 1
-     * @param name2 Der Name von Spieler 2
+     * @param ai returns if the game is single- (ki = true) or Multiplayer
+     * @param name1 The Name from Player 1
+     * @param name2 The Name from Player 2
      * @see GameWindowController
      */
-    public void startGame(boolean ki, String name1, String name2) {
-        playingField.rebuild(startPaneController.getSize());
-        gamePaneController.buildPlayingField(startPaneController.getSize(), (int)primaryStage.getHeight() - 200, playingField);
-        playerController.init(ki, startPaneController.getSize(), name1, name2);
-        gamePaneController.createTokens(playerController.getPlayer1(), playerController.getPlayer2());
-        setGameLayout();
+    public void startGame(boolean ai, String name1, String name2) {
+        playingField.rebuild(startGameMenuController.getSize());
+        gameWindowController.buildPlayingField((int)primaryStage.getHeight() - 200, playingField);
+        playerController.init(ai, startGameMenuController.getSize(), name1, name2);
+        gameWindowController.createTokens(playerController.getPlayer1(), playerController.getPlayer2());
+        setStartLayout();
     }
 
     /**
-     * Zeigt ein Fenster an sobald ein Spieler gewonnen hat.
-     * Der Spieler hat die Möglichkeit das Spiel neuzustarten,
-     * ins Hauptmenü zu wechseln, oder das Programm zu beenden.
+     * Shows a window when a player won.
+     * The player will have a chance to start the game again,
+     * to go to the main menu or to end the game.
      *
-     * @param name Name des Spielers, der gewonnen hat.
+     * @param name Name of the player that won the game.
      */
     public void winDialog(String name){
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
         dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.getDialogPane().getStylesheets().add(Main.class.getResource("view/style.css").toExternalForm());
-        dialog.setHeaderText(name + " hat das Spiel gewonnen! Wähle nun, ob du eine neue Runde spielen,\nins Hauptmenü zurückkehren oder das Spiel beenden möchtest.");
+        dialog.getDialogPane().getStylesheets().add(Main.class.getResource("../view/style.css").toExternalForm());
+        dialog.setHeaderText(name + " has won the Game! Now choose if you want to start the game again,\ngo back to the main Menu or close the game.");
 
-        ButtonType restartButton = new ButtonType("Neustart");
-        ButtonType menuButton = new ButtonType("Hauptmenü");
-        ButtonType closeButton = new ButtonType("Beenden");
+        ButtonType restartButton = new ButtonType("restart");
+        ButtonType menuButton = new ButtonType("mainMenu");
+        ButtonType closeButton = new ButtonType("Close");
 
         dialog.getButtonTypes().setAll(restartButton, menuButton, closeButton);
 
@@ -245,6 +253,15 @@ public class Main extends Application {
             Platform.exit();
         }
 
+    }
+
+    /**
+     * breaks the current game and returns to the main menu.
+     */
+    public void returnToStart() {
+        setStartLayout();
+        gameWindowController.clearField();
+        game.reset();
     }
 
     /**
@@ -266,11 +283,22 @@ public class Main extends Application {
     }
 
     /**
-     * returns the SuperDame Image.
+     * returns the SuperDame/KING/Queen Image.
      *
-     * @return Image SuperDame
+     * @return Image SuperDame/KING/QUEEN
      */
     public Image getSuperDameImage() {
-        return superDame;
+        return king;
+    }
+
+    /**
+     * This will called from the start (loads all the needed Logos).
+     */
+    @Override
+    public void init() {
+        logo = new Image(Main.class.getClassLoader().getResourceAsStream("resources/queen.png"));
+        king = new Image(Main.class.getClassLoader().getResourceAsStream("resources/king-logo.png"));
     }
 }
+
+

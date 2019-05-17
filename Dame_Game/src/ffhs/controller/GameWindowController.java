@@ -14,7 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-
+import ffhs.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -63,7 +63,7 @@ public class GameWindowController {
     /**
      * Pane to put the removed tokens from player 1
      *
-     * @see #removeToken(stone)
+     * @see # removeToken(stone)
      */
     @FXML
     private Pane pane_player1;
@@ -71,7 +71,7 @@ public class GameWindowController {
     /**
      * Pane to put the removed tokens from player 2
      *
-     * @see #removeToken(stone)
+     * @see  # removeToken(stone)
      */
     @FXML
     private Pane pane_player2;
@@ -97,7 +97,7 @@ public class GameWindowController {
     /**
      * label for the announcements
      *
-     * @see setstatus(String)
+     * @see  # setstatus(String)
      */
     @FXML
     private Label label_status;
@@ -120,12 +120,12 @@ public class GameWindowController {
      * creates the playing Field.
      * inits all the {@link Rectangle}
      *
-     * @param amount the size of the playing Field (10x10)
-     * @param size   the size of the playing Field in Pixel
-     * @param pf     Object from {@link PlayingField} to read the Fields
+//     * @param amount the size of the playing Field (10x10)
+//     * @param size   the size of the playing Field in Pixel
+     * @param pf Object from {@link PlayingField} to read the Fields
      */
 
-    public void buildPlayingField() {
+    public void buildPlayingField(int size, PlayingField pf) {
         int amount = 10;
         this.size = size;
         this.tokenRadius = size / amount / 3;
@@ -196,10 +196,10 @@ public class GameWindowController {
     }
 
     /**
-     * setzt die Namen der beiden Spieler.
+     * set the names of both players.
      *
-     * @param name1 Name Spieler1
-     * @param name2 Name Spieler2
+     * @param name1 Name Player1
+     * @param name2 Name Player2
      */
     private void setNames(String name1, String name2) {
         if (name1 != null && !name1.isEmpty()) {
@@ -226,25 +226,24 @@ public class GameWindowController {
     }
 
     /**
-     * Nachricht auf der Spieloberfläche.
-     * nutze {@code ""} um gar nichts anzuzeigen.
+     * Warning on top of the screen.
+     * use {@code ""} to not show something.
      *
-     * @param message Nachricht, die angezeigt werden soll.
+     * @param message message, which will be displayed.
      */
     private void setStatus(String message) {
         label_status.setText(message);
     }
 
     /**
-     * entfernt einen einzigen Stein vom Spielfeld und setzt diesen an den Rand.
-     * <br>
-     * Die eliminierten Steine werden "gestapelt" dargestellt. Jeder Stein überagt seinen Vorgänger zur Hälfte.
+     * removes a token from the field
+     * The removed token will be broken into 2 pieces
      *
-     * @param stone Stein der entfernt wird.
+     * @param stone Stein that will be moved
      */
     private void removeToken(Stone stone) {
         playingField.getChildren().remove(stone.getcCirc());
-        if (stone.getColor() == Model.Color.BLACK) {
+        if (stone.getColor() == ffhs.model.Color.BLACK) {
             pane_player1.getChildren().add(stone.getcCirc());
             double off = 0;
             if (stone.getcCirc() instanceof StackPane) {
@@ -265,12 +264,11 @@ public class GameWindowController {
     }
 
     /**
-     * bewegt einen Stein entlang eines CrossedFields.
-     * <br>Alle Felder (enterFields) von Move werden der Reihe nach angefahren.
-     * Während des Zugs werden, sobald beide Steine übereinander sind, die übersprungenen Steine (skippedFields) entfernt.<br>
-     * Während der Stein bewegt wird, sind weitere Benutzereingaben gesperrt. {@link #graphicAction}
+     * moves a token across the field.
+     * skip-fields will be removed
+     * during the token movements, the players are locked {@link #graphicAction}
      *
-     * @param move Move, den der Stein macht
+     * @param move Move, that the token does
      */
     public void moveToken(Move move) {
         graphicAction = true;
@@ -318,12 +316,12 @@ public class GameWindowController {
     }
 
     /**
-     * setzt die Node um einen kleinen Wert näher in Richtung Ziel.
-     * Die Node wird jedes mal um einen Bruchteil (1/12) eines Feldes weiter gesetzt.
+     * set the Node to a closer value near the direction.
+     * The node will will be every time (1/12) from a  a Field replaced.
      *
-     * @param n Objekt, welches bewegt werden soll.
-     * @param value Größe eines Feldes.
-     * @param move Der aktuelle Zug. Notwendig um die Richtung zu bestimmen.
+     * @param n Objekt, which should be moved
+     * @param value size from a field
+     * @param move Der actuall move to lock the destination.
      */
     private void calculateTokenLocation(Node n, double value, Move move) {
         n.setLayoutX(n.getLayoutX() + (value / 12)
@@ -333,13 +331,13 @@ public class GameWindowController {
     }
 
     /**
-     * testet ob eine Node grafisch über einem Feld liegt.
-     * Ein leichter Versatz von +/- 2% wird berücksichtigt.
+     * test if a token is there graphical.
+     * An offset of +/- 2% will be taken into consideration.
      *
-     * @param s Stein der getestet wird.
-     * @param f Feld, das getestet wird ob der Node darauf liegt.
-     * @param value Abstand in dem der Stein bewegt wird.
-     * @return true, falls der Stein über dem Feld liegt.
+     * @param s token will be tested
+     * @param f Field that will be tested if the token is on it.
+     * @param value distance that the token moved
+     * @return true, if the token is on the field.
      */
     private boolean isStoneNearField(Stone s, Field f, double value) {
         double off = 0;
@@ -352,11 +350,10 @@ public class GameWindowController {
     }
 
     /**
-     * hebt alle besuchten Felder und mögliche weitere Felder hervor.
-     * Besuchte Felder werden blau hervorgehoben und mögliche grün.
+     * has all visited fields and the possible fields to be moved into.
      *
-     * @param fields mögliche Felder.
-     * @param move Move (besuchte Felder).
+     * @param fields possible fields.
+     * @param move Move (visited fields).
      */
     public void highlightFields(List<Field> fields, Move move) {
         colorField();
@@ -370,12 +367,12 @@ public class GameWindowController {
     }
 
     /**
-     * initialisiert den {@link Circle} eines Steins und setzt ihn an die richtige Stelle auf dem Spielfeld.
+     * initialize the {@link Circle} from a token and set it to the tight position in the field.
      *
      * @param x X-Position
      * @param y Y-Position
-     * @param c Kreis der initialisiert wird
-     * @param color Farbe die der Stein haben soll
+     * @param c init circle
+     * @param color color of the token
      */
     private void initToken(int x, int y, Node c, Color color) {
         if (c instanceof Circle) {
@@ -384,7 +381,7 @@ public class GameWindowController {
             ((Circle)c).setStroke(Color.GRAY);
             ((Circle)c).setStrokeWidth(1);
             placeToken(x, y, c);
-            c.setOnMouseClicked(this::onFieldKlick);
+            c.setOnMouseClicked(this::onFieldClick);
             playingField.getChildren().add(c);
         }
         else {
@@ -393,13 +390,13 @@ public class GameWindowController {
     }
 
     /**
-     * setzt die x- und y-Koordinaten einer Node, unter Beachtung der Superdame.
-     * <br>Einfache Steine sind Kreise und haben ihren Nullpunkt in der Mitte ({@link Circle}).
-     * Eine Superdame ist ein Stackpane, mit einem Circle und einem Image. Diese hat ihren Nullpunkt links oben.
+     * set the x- and the y-coordinates from a Node, and check the king/queen(superDame).
+     * Normal tokens are round and have a  ZeroSpot in der Middle ({@link Circle}).
+     * A King has a crown. Has a zeroPoint up and left.
      *
-     * @param x Index x des Feldes, auf dem der Stein platziert werden soll.
-     * @param y Index y des Feldes, auf dem der Stein platziert werden soll.
-     * @param node Node die platziert wird.
+     * @param x Index x from the field that the token should be
+     * @param y Index y from the field that the token should be
+     * @param node Node that will be placed.
      */
     private void placeToken(int x, int y, Node node) {
         double a = (double)size / amount;
@@ -412,11 +409,11 @@ public class GameWindowController {
     }
 
     /**
-     * updatet einen Token, sodass dieser ganz oben auf dem Feld liegt und sich über anderen Tokens befindet.
-     * Die Node wird kurz von der Oberfläche entfernt und wieder hinzugefügt
+     * updatet a token, so that it will be all over up.
+     * the node will be for a short time removed from the field and then added again (movement animation).
      * <b>WICHTIG:</b> für {@link #moveToken(Move)}
      *
-     * @param c Kreis
+     * @param c circle
      */
     private void updateToken(Node c) {
         playingField.getChildren().remove(c);
@@ -424,11 +421,11 @@ public class GameWindowController {
     }
 
     /**
-     * verwandelt einen einfachen Stein in eine Superdame.
-     * Dazu wird ein Stackpane erzeugt, in welches der {@link Circle} und ein {@link javafx.scene.image.Image} platziert werden.
-     * Das Image hat 75% der Größe des Circles.
+     * controls a normal token in a king-mode
+     * a stackPane will be made, which will help us with {@link Circle} and {@link javafx.scene.image.Image}
+     * The Image has 75% from the Circles size.
      *
-     * @param s Superdamen Stein
+     * @param s SuerDame(King) token.
      */
     private void visualizeSuperDame(Stone s) {
         if (s.isSuperDame() && s.getcCirc() instanceof Circle) {
@@ -445,7 +442,7 @@ public class GameWindowController {
             sp.getChildren().add(iw);
             sp.setLayoutX(c.getLayoutX() - c.getRadius());
             sp.setLayoutY(c.getLayoutY() - c.getRadius());
-            sp.setOnMouseClicked(this::onFieldKlick);
+            sp.setOnMouseClicked(this::onFieldClick);
             playingField.getChildren().remove(c);
             playingField.getChildren().add(sp);
             s.changeNode(sp);
@@ -453,17 +450,16 @@ public class GameWindowController {
     }
 
     /**
-     * verarbeitet die Maus Klicks auf das Spielfeld.
-     * Geglickt werden kann auf ein {@link Rectangle} von einem {@link Field},
-     * ein {@link Circle} von einem {@link Stone} oder ein {@link StackPane} von einer Superdame.
-     * Zu der geglickten Node wird das entsprechende Feld, bzw. der Stein ermittelt und an das Game übergeben.
+     * processes with mouse clicks on the spielfield.
+     * The things that can be clicked at a{@link Rectangle} from a {@link Field},
+     * a {@link Circle} from a {@link Stone} or a {@link StackPane} from a King.
      *
      * @param e MouseEvent
      * @see Game#selectStone(Stone)
      * @see Game#selectField(Field)
      */
     @FXML
-    private void onFieldKlick(MouseEvent e) {
+    private void onFieldClick(MouseEvent e) {
         if (!graphicAction && (!control.getPlayerController().isSinglePlayerGame() || control.getPlayerController().isCurrentPlayer1())) {
             if (e.getSource() instanceof Rectangle || e.getSource() instanceof Circle || e.getSource() instanceof StackPane) {
                 setStatus("");
@@ -478,11 +474,11 @@ public class GameWindowController {
                 else {
                     Stone s = control.getPlayerController().getCurrentPlayer().getStoneOfClickedCircle((Node)e.getSource());
                     if (s == null) {
-                        setStatus("Dieser Stein gehört nicht dir");
+                        setStatus("This is NOT your token");
                         return;
                     }
                     else if (s.isEliminated()) {
-                        setStatus("Dieser Stein ist bereits eliminiert");
+                        setStatus("This token was already eliminated");
                         return;
                     }
                     control.getGame().selectStone(s);
