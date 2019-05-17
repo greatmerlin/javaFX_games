@@ -265,7 +265,7 @@ public class GameWindowController {
     }
 
     /**
-     * bewegt einen Stein entlang eines Moves.
+     * bewegt einen Stein entlang eines CrossedFields.
      * <br>Alle Felder (enterFields) von Move werden der Reihe nach angefahren.
      * Während des Zugs werden, sobald beide Steine übereinander sind, die übersprungenen Steine (skippedFields) entfernt.<br>
      * Während der Stein bewegt wird, sind weitere Benutzereingaben gesperrt. {@link #graphicAction}

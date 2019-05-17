@@ -1,10 +1,8 @@
 package ffhs.model;
 
 /**
- * speichert Daten für das ganze Spielfeld
- * Spielfeld hat eine Größe
- *
- * @author Mareike Giek
+ * saves Data for the whole PlayingField
+ * PlayingField has one size.
  */
 public class PlayingField {
     private int FieldSize;
@@ -18,9 +16,9 @@ public class PlayingField {
     }
 
     /**
-     * generiert ein Spielfeld, mit {@link #FieldSize} Feldern in einer Reihe.
-     * Die einzelnen Felder bekommen abwechselnd die Farbe schwarz oder weiß zugeteilt.
-     * Grafisch werden die Farben allerdings anders dargestellt, da man sonst die Steine nicht von den Feldern unterscheiden könnte.
+     * creates a PlayingField, with {@link #FieldSize} Fields in a Row.
+     * The fields are white or black.
+     * Graphically the Fields will differ from the tokens.
      */
     private void createField(){
         cField = new Field[FieldSize*FieldSize];
@@ -41,9 +39,9 @@ public class PlayingField {
     }
 
     /**
-     * generiert ein neues Spielfeld mit einer anderen Größe.
+     * generates a Field with another size.
      *
-     * @param fieldSize Größe des Spielfelds.
+     * @param fieldSize Field's size.
      */
     public void rebuild(int fieldSize) {
         this.FieldSize = fieldSize;
@@ -55,11 +53,11 @@ public class PlayingField {
     }
 
     /**
-     * gibt ein Feld mit bestimmten Koordinaten zurück.
+     * returns a Field with specific coordinates
      *
-     * @param x x-Koordinate.
-     * @param y y-Koordinate.
-     * @return Feld mit den passenden Koordinaten.
+     * @param x x-Coordinate.
+     * @param y y-Coordinate.
+     * @return Field with the fitted coordinates.
      */
     public Field getField(int x, int y) {
         if (x * FieldSize + y >= 0 && x * FieldSize + y < FieldSize * FieldSize) {

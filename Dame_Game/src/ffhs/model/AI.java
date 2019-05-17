@@ -1,6 +1,6 @@
 package ffhs.model;
 
-import controller.Main;
+import ffhs.controller.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class AI extends Player {
     private Player enemy;
 
     /**
-     * Lists of all the posible moves, that can be done from the AI.
+     * Lists of all the possible moves, that can be done from the AI.
      */
-    private List<Moves> allMoves;
+    private List<CrossedFields> allMoves;
 
     public AI(Color c, String name, int size, Player enemy) {
         super(c, name, size);   //Contructor call in Player
@@ -26,15 +26,15 @@ public class AI extends Player {
     }
 
     /**
-     * Wird von der KI ein Zug erwartet, wird diese Methode aufgerufen, sie ermittelt einen möglichst langen Zug.
+     * If a turn from the AI will is being waited, this Method will be called and returns a possible move.
      *
-     * @throws NoPossibleMoveException Die KI kann keinen Zug mehr machen.
+     * @throws NoPossibleMoveException The AI can't do any moves.
      * @return Zugfolge
      */
     public Move getBestMove() throws NoPossibleMoveException{
         allMoves = new ArrayList<>();
 
-        //Für alle noch nicht eliminierten Steine werden alle möglichen Züge ermittelt (KI ist eine rekursive Methode)
+        //A possible move for every not eliminated token (AI is a recursive Method)
         for (Stone s : getStones()) {
             if (!s.isEliminated()) {
                 ki(s, s.getIndexX(), s.getIndexY(), 0, true, new ArrayList<Field>(), new ArrayList<Field>());
@@ -44,62 +44,58 @@ public class AI extends Player {
         if(allMoves.size() == 0){
             throw new NoPossibleMoveException();
         }
-        return Moves.getBestZug(allMoves);
+        return CrossedFields.getBestZug(allMoves);
     }
 
     /**
-     * Hier wird ausgehend von X und Y Koordinaten geschaut, welcher Zug möglich ist.
-     * normale Steine können nur nach unten schlagen/ziehen (RIGHTDOWN, LEFTDOWN), die Superdame kann hingegen in alle vier diagonalen Richtungen
-     * (RIGHTDOWN, LEFTDOWN, RIGHTUP, LEFTUP) und auch mehrere Felder auf einmal.
+     * From the  X and Y coordinates will be investigated which are the possible moves to be made.
+     * normal tokens can move: (RIGHTDOWN, LEFTDOWN), The KING/Queen can go in every direction.
+     * (RIGHTDOWN, LEFTDOWN, RIGHTUP, LEFTUP) and more than one field at once.
      *
      * @see #ki(Stone, int, int, int, boolean, List, List)
-     * @param s Stein, für den der Zug ermittelt wird
-     * @param d Richtung, in die gefahren werden soll
-     * @param x aktuelle X-Koordinate
-     * @param y aktuelle Y-Koordinate
-     * @param ersterDurchgang ist dies der erste Aufruf (noch nicht rekursiv aufgerufen)
-     * @param skipped enthält alle gegnerischen Felder, die in diesem Zug bereits rausgeworfen wurden
-     * @param entered enthält alle Felder, auf denen der eigene Stein kurz aufkommt
-     * @return Zuglänge ausgehend von X und Y (Anzahl überquerte Felder)
+     * @param s token for this turn
+     * @param d direction, in which there is danger
+     * @param x actuell X-coordinate
+     * @param y actuell Y-coordinate
+     * @param firstCall is the first call(recursive not called yet)
+     * @param skipped has all the opponent-Fields, that were eliminated in this round
+     * @param entered has all the Fields, in which the token enters.
+     * @return the number of cross fields of X and Y
      */
-    private int diagonalcheck(Stone s, Direction d, int x, int y, boolean ersterDurchgang, List<Field> skipped, List<Field> entered) {
+    private int diagonalcheck(Stone s, Direction d, int x, int y, boolean firstCall, List<Field> skipped, List<Field> entered) {
 
-        // ermittelt möglichen Spielzug nach rechts unten
+        // possible turn right down
         if (d.equals(Direction.RIGHTDOWN)) {
-            /*  Wenn s eine superdame ist, wird die for-Schleife mehrmals durchlaufen um auch einen weiter entfernten Stein zu finden,
-                ansonsten nur einmal, um zu schauen, ob beim nächsten Feld bereits ein gegnerischer Stein ist. */
-            for(int i = 0; i < (s.isSuperDame() ?  (Main.playingField.getSize()-2) : 1); i++) {
+            /*  If s is a KING/Queen, the for-loop will be used many times to find a token which is far from the current field,
+                otherwise check where a nearby opponent is */
+            for(int i = 0; i < (s.isSuperDame() ?  (ffhs.controller.Main.playingField.getSize()-2) : 1); i++) {
 
-                // Sobald ein eigener Stein im Weg ist wird abgebrochen oder sobald ein gegnerische Stein, hinter dem das Feld nicht frei ist.
-                if(Main.playingField.isPositionInsideField(x + i + 1, y - i - 1) && hasStoneAt(x + i + 1, y - i - 1) ||
+                // The moment an opponent is on the way it stops or when an opponent is behind this field.
+                if(ffhs.controller.Main.playingField.isPositionInsideField(x + i + 1, y - i - 1) && hasStoneAt(x + i + 1, y - i - 1) ||
                         enemy.hasStoneAt(x + i + 1, y - i - 1) && (enemy.hasStoneAt(x + i + 2, y - i - 2) || hasStoneAt(x + i + 2, y - i - 2))) {
                     return 0;
                 }
 
-                /*  sind die nächsten zwei diagonalen Felder innerhalb des Spielfeldes,
-                    ist der zu überspringende gegnerische Stein nicht bereits im gleichen zug schonmal besucht(Zyklus)
-                    Gegnerischer Stein auf nächstem Feld, übernächstes muss aufgrund der Abbruchbedingung von oben leer sein*/
+                /*  the next 2 diagonal fields, if the skipped field wasn't visited the opponent should be empty*/
                 if (Main.playingField.isPositionInsideField(x + i + 2, y - i - 2) && Main.playingField.isPositionInsideField(x + i + 1, y - i - 1)
                         && !skipped.contains(Main.playingField.getField(x + i + 1, y - i - 1))
                         && enemy.hasStoneAt(x + i + 1, y - i - 1)) {
-                    //Übersprungener Stein
+                    //skipped token
                     skipped.add(Main.playingField.getField(x + i + 1, y - i - 1));
-                    //landepunkt, von dem ausgehend dann erneut geschaut wird, ob es weitere Zugmöglichkeiten gibt
+                    //see again if there are other possible moves to be done
                     entered.add(Main.playingField.getField(x + i + 2, y - i - 2));
-                    //diese Punkte werden gespeichert, um später die Bewegungsanimation zu ermöglichen
+                    //save these scores to be used later.
                     return 2+i;
                 }
 
             }
-            /*  ist nächstes diagonales Feld innerhalb des Spielfeldes, und nicht von einem Spielstein besetzt, einfacher Zug, ist deshalb nur bei erstem
-                Aufruf möglich, nicht im rekursionsfall */
-            if (ersterDurchgang && Main.playingField.isPositionInsideField(x + 1, y - 1) && !(enemy.hasStoneAt(x + 1, y - 1) || hasStoneAt(x + 1, y - 1))) {
+            /*  if the next diagonal field is empty, it can be used */
+            if (firstCall && Main.playingField.isPositionInsideField(x + 1, y - 1) && !(enemy.hasStoneAt(x + 1, y - 1) || hasStoneAt(x + 1, y - 1))) {
                 entered.add(Main.playingField.getField(x + 1, y - 1));
                 return 1;
             }
         }
-        /*  In den folgenden else if- Fällen ist alles gleich wie im ersten Fall, es unterscheidet sich nur in der Richtung,
-            die Überprüft wird. */
+        /*  the decision for the move*/
         else if (d.equals(Direction.LEFTDOWN)) {
             for(int i = 0; i < (s.isSuperDame() ?  (Main.playingField.getSize()-2) : 1); i++) {
                 if(Main.playingField.isPositionInsideField(x - i - 1, y - i - 1) && hasStoneAt(x - i - 1, y - i - 1) ||
@@ -115,7 +111,7 @@ public class AI extends Player {
                 }
 
             }
-            if (ersterDurchgang && Main.playingField.isPositionInsideField(x - 1, y - 1) && !(enemy.hasStoneAt(x - 1, y - 1) || hasStoneAt(x - 1, y - 1))) {
+            if (firstCall && Main.playingField.isPositionInsideField(x - 1, y - 1) && !(enemy.hasStoneAt(x - 1, y - 1) || hasStoneAt(x - 1, y - 1))) {
                 entered.add(Main.playingField.getField(x - 1, y - 1));
                 return 1;
             }
@@ -134,7 +130,7 @@ public class AI extends Player {
                 }
 
             }
-            if (ersterDurchgang && Main.playingField.isPositionInsideField(x + 1, y + 1) && !(enemy.hasStoneAt(x + 1, y + 1) || hasStoneAt(x + 1, y + 1))) {
+            if (firstCall && Main.playingField.isPositionInsideField(x + 1, y + 1) && !(enemy.hasStoneAt(x + 1, y + 1) || hasStoneAt(x + 1, y + 1))) {
                 entered.add(Main.playingField.getField(x + 1, y + 1));
                 return 1;
             }
@@ -153,7 +149,7 @@ public class AI extends Player {
                 }
 
             }
-            if (ersterDurchgang && Main.playingField.isPositionInsideField(x - 1, y + 1) && !(enemy.hasStoneAt(x - 1, y + 1) || hasStoneAt(x - 1, y + 1))) {
+            if (firstCall && Main.playingField.isPositionInsideField(x - 1, y + 1) && !(enemy.hasStoneAt(x - 1, y + 1) || hasStoneAt(x - 1, y + 1))) {
                 entered.add(Main.playingField.getField(x - 1, y + 1));
                 return 1;
             }
@@ -162,26 +158,26 @@ public class AI extends Player {
     }
 
     /**
-     * Die KI Methode ermittelt mit Hilfe von {@link #diagonalcheck(Stone, Direction, int, int, boolean, List, List)}, ob ein gegnerischer Stein geschlagen werden kann und ruft sich dann mit der
-     * neuen Position (X,Y) wieder rekursiv auf. Dann wird ausgehen von der neuen Position wieder Diagonalchecks durchgeführt
+     * The AI Methods determine {@link #diagonalcheck(Stone, Direction, int, int, boolean, List, List)}, if an opponent's token can be hit(skipped) and calls
+     * itself in the new coordinates(X,Y) again recursive. Then again from the new position diagonal.
      *
      * @see #diagonalcheck(Stone, Direction, int, int, boolean, List, List)
-     * @param s aktueller Stein
-     * @param x aktuelle X-Koordinate
-     * @param y aktuelle Y-Koordinate
-     * @param zuglaenge bisherige Zuglänge des Zuges
-     * @param ersterDurchgang ist dies der erste Aufruf (nicht Rekursionsfall)
-     * @param skipped enthält alle gegnerischen Felder, die in diesem Zug bereits rausgeworfen wurden
-     * @param entered enthält alle Felder, auf denen der eigene Stein kurz aufkommt
+     * @param s actuell token
+     * @param x actuell X-coordinate
+     * @param y actuell Y-coordinate
+     * @param crossedFields crossedFields until now
+     * @param firstCall the first call (not recursive)
+     * @param skipped the skipped fields of this turn
+     * @param entered the entered fields
      */
-    private void ki(Stone s, int x, int y, int zuglaenge, boolean ersterDurchgang, List<Field> skipped, List<Field> entered) {
+    private void ki(Stone s, int x, int y, int crossedFields, boolean firstCall, List<Field> skipped, List<Field> entered) {
 
-        // ist dies der erste Durchgang, wird das Startfeld hinzugefügt
-        if (ersterDurchgang) {
+        // if it is the first path(entry) the Startfeld will be added
+        if (firstCall) {
             entered.add(Main.playingField.getField(x, y));
         }
 
-        // skipped und entered Listen werden für die jeweiligen Richtungen kopiert
+        // skipped und entered Lists were copied for all the directions.
         List<Field> skippedLeftDown = new ArrayList<>(skipped);
         List<Field> enteredLeftDown = new ArrayList<>(entered);
 
@@ -195,46 +191,45 @@ public class AI extends Player {
         List<Field> enteredRightUp = new ArrayList<>(entered);
 
         int a;
-        if ((a = diagonalcheck(s, Direction.RIGHTDOWN, x, y, ersterDurchgang, skippedLeftDown, enteredLeftDown)) > 1) {
-            /*  KI wird rekursiv aufgerufen, wenn ein gegnerischer Stein übersprungen werden kann (Rückgabewert von diagonalcheck > 1), um zu schauen ob ein weiterer
-                gegnerischer Stein von der neuen Position aus erreichbar ist */
-            ki(s, x + a, y - a, zuglaenge + a, false, new ArrayList<Field>(skippedLeftDown), new ArrayList<Field>(enteredLeftDown));
+        if ((a = diagonalcheck(s, Direction.RIGHTDOWN, x, y, firstCall, skippedLeftDown, enteredLeftDown)) > 1) {
+            /*  recursive AI call, if an opponent is skipped (hit) to see if there is another one to continue doing so */
+            ki(s, x + a, y - a, crossedFields + a, false, new ArrayList<Field>(skippedLeftDown), new ArrayList<Field>(enteredLeftDown));
         } else {
-            if (zuglaenge + a > 0) {
-                Moves z = new Moves(zuglaenge + a, s);
+            if (crossedFields + a > 0) {
+                CrossedFields z = new CrossedFields(crossedFields + a, s);
                 z.addEnterField(enteredLeftDown);
                 z.addSkipField(skippedLeftDown);
                 allMoves.add(z);
             }
         }
 
-        if ((a = diagonalcheck(s, Direction.LEFTDOWN, x, y, ersterDurchgang, skippedRightDown, enteredRightDown)) > 1) {
-            ki(s, x - a, y - a, zuglaenge + a, false, new ArrayList<Field>(skippedRightDown), new ArrayList<Field>(enteredRightDown));
+        if ((a = diagonalcheck(s, Direction.LEFTDOWN, x, y, firstCall, skippedRightDown, enteredRightDown)) > 1) {
+            ki(s, x - a, y - a, crossedFields + a, false, new ArrayList<Field>(skippedRightDown), new ArrayList<Field>(enteredRightDown));
         } else {
-            if (zuglaenge + a > 0) {
-                Moves z = new Moves(zuglaenge + a, s);
+            if (crossedFields + a > 0) {
+                CrossedFields z = new CrossedFields(crossedFields + a, s);
                 z.addEnterField(enteredRightDown);
                 z.addSkipField(skippedRightDown);
                 allMoves.add(z);
             }
         }
 
-        if ((a = diagonalcheck(s, Direction.RIGHTUP, x, y, ersterDurchgang, skippedLeftUp, enteredLeftUp)) > 1) {
-            ki(s, x + a, y + a, zuglaenge + a, false, new ArrayList<Field>(skippedLeftUp), new ArrayList<Field>(enteredLeftUp));
+        if ((a = diagonalcheck(s, Direction.RIGHTUP, x, y, firstCall, skippedLeftUp, enteredLeftUp)) > 1) {
+            ki(s, x + a, y + a, crossedFields + a, false, new ArrayList<Field>(skippedLeftUp), new ArrayList<Field>(enteredLeftUp));
         } else {
-            if (zuglaenge + a > 0) {
-                Moves z = new Moves(zuglaenge + a, s);
+            if (crossedFields + a > 0) {
+                CrossedFields z = new CrossedFields(crossedFields + a, s);
                 z.addEnterField(enteredLeftUp);
                 z.addSkipField(skippedLeftUp);
                 allMoves.add(z);
             }
         }
 
-        if ((a = diagonalcheck(s, Direction.LEFTUP, x, y, ersterDurchgang, skippedRightUp, enteredRightUp)) > 1) {
-            ki(s, x - a, y + a, zuglaenge + a, false, new ArrayList<Field>(skippedRightUp), new ArrayList<Field>(enteredRightUp));
+        if ((a = diagonalcheck(s, Direction.LEFTUP, x, y, firstCall, skippedRightUp, enteredRightUp)) > 1) {
+            ki(s, x - a, y + a, crossedFields + a, false, new ArrayList<Field>(skippedRightUp), new ArrayList<Field>(enteredRightUp));
         } else {
-            if (zuglaenge + a > 0) {
-                Moves z = new Moves(zuglaenge + a, s);
+            if (crossedFields + a > 0) {
+                CrossedFields z = new CrossedFields(crossedFields + a, s);
                 z.addEnterField(enteredRightUp);
                 z.addSkipField(skippedRightUp);
                 allMoves.add(z);
