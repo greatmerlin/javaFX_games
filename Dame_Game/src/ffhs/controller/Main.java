@@ -30,19 +30,18 @@ public class Main extends Application {
     private StartGameMenuController startGameMenuController;
 
     private Stage primaryStage;
+    private GameWindowController gameWindowController;
 
     private Stage rulesStage;
     private Stage aboutStage;
 
-    private PlayerController playerController;
-
     public static PlayingField playingField;
-
-    private GameWindowController gameWindowController;
+    private PlayerController playerController;
 
     private Image king;
     private Image logo;
 
+    private Parent gameLayout;
     private Game game;
 
 
@@ -68,13 +67,23 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
 
         primaryStage.setTitle("Dame Game");
+        primaryStage.getIcons().add(logo);
         primaryStage.setOnCloseRequest(event -> Platform.exit());
 
         loadRootMenuLayout();
         loadStartLayout();
+        loadGameLayout();
         setStartLayout();
         loadRulesWindow();
         loadAboutWindow();
+
+        playingField = new PlayingField();
+        playerController = new PlayerController();
+        game = new Game(this, gameWindowController, playerController);
+
+//        primaryStage.setMaximized(true); //TODO : decide if you want it full screen or not.
+        primaryStage.setMinHeight(menuBarPane.getPrefHeight());
+        primaryStage.setMinWidth(menuBarPane.getPrefWidth());
 
         primaryStage.show();
 
@@ -202,7 +211,22 @@ public class Main extends Application {
         aboutStage.show();
     }
 
-    //-------------------------------------------------------------------------------------------
+    /**
+     * loads the Game Scene
+     * In this Scene, the PlayingField will be shown
+     */
+    private void loadGameLayout() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("../view/GameWindow.fxml"));
+            gameLayout = loader.load();
+            gameWindowController = loader.getController();
+            gameWindowController.setObjects(this);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * starts a Game
@@ -217,7 +241,7 @@ public class Main extends Application {
      */
     public void startGame(boolean ai, String name1, String name2) {
         playingField.rebuild(startGameMenuController.getSize());
-        gameWindowController.buildPlayingField((int)primaryStage.getHeight() - 200, playingField);
+        gameWindowController.buildPlayingField(startGameMenuController.getSize(), (int)primaryStage.getHeight() - 200, playingField);
         playerController.init(ai, startGameMenuController.getSize(), name1, name2);
         gameWindowController.createTokens(playerController.getPlayer1(), playerController.getPlayer2());
         setStartLayout();

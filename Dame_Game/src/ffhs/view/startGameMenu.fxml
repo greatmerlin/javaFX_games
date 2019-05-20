@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="600.0" prefWidth="800.0"
             styleClass="ImageBackground" stylesheets="@styles.css"
             xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="ffhs.controller.StartGameMenuController">
@@ -30,6 +31,13 @@
               AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
             <children>
                 <Separator />
+                <Label styleClass="hLabel" text="Settings:" />
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <children>
+                        <Label text="Size:" />
+                        <ComboBox fx:id="comboBox_size" prefWidth="150.0" />
+                    </children>
+                </HBox>
                 <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="20.0">
                     <children>
                         <Label text="Player Names:" />

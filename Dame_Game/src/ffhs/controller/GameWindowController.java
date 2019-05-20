@@ -36,7 +36,7 @@ public class GameWindowController {
     /**
      * The size of the board
      */
-    private int size = 10;
+    private int size;
 
     /**
      * Amount of game pixels. How big is the game.
@@ -122,20 +122,20 @@ public class GameWindowController {
      *
 //     * @param amount the size of the playing Field (10x10)
 //     * @param size   the size of the playing Field in Pixel
+     * @param amount playingField's size (8/10).
+     * @param size playingField's size  in Pixel.
      * @param pf Object from {@link PlayingField} to read the Fields
      */
 
-    public void buildPlayingField(int size, PlayingField pf) {
-        int amount = 10;
+    public void buildPlayingField(int amount, int size, PlayingField pf) {
+        this.amount = amount;
         this.size = size;
         this.tokenRadius = size / amount / 3;
 
         field = new ArrayList<>();
         clearField();
         playingField.setPrefSize(size, size);
-
-        double a = (double) size / amount;
-
+        double a = (double)size / amount;
         for (int i = 0; i < amount; i++) {
             for (int j = 0; j < amount; j++) {
                 Rectangle temp = new Rectangle();
@@ -284,7 +284,8 @@ public class GameWindowController {
                         if (!isStoneNearField(s, move.getNextField(), value)) {
                             calculateTokenLocation(s.getcCirc(), value, move);
                             if (move.getFirstSkipedField() != null && isStoneNearField(s, move.getFirstSkipedField(), value)) {
-                                Stone stone = control.getPlayerController().getOtherPlayer().getStoneAt(move.getFirstSkipedField().getIndexX(), move.getFirstSkipedField().getIndexY());
+                                Stone stone = control.getPlayerController().getOtherPlayer()
+                                        .getStoneAt(move.getFirstSkipedField().getIndexX(), move.getFirstSkipedField().getIndexY());
                                 if (stone != null) {
                                     stone.setEliminated();
                                     removeToken(stone);
@@ -342,7 +343,6 @@ public class GameWindowController {
     private boolean isStoneNearField(Stone s, Field f, double value) {
         double off = 0;
         if (s.getcCirc() instanceof StackPane) {
-//            off = ((StackPane) s.getcCirc()).getWidth() / 2;
             off = tokenRadius;
         }
         return (f.getIndexX() + 0.48) * value <= s.getcCirc().getLayoutX() + off && (f.getIndexX() + 0.52) * value >= s.getcCirc().getLayoutX() + off &&

@@ -12,7 +12,7 @@ import java.util.List;
 public class Game {
 
     private Main control;
-    private GameWindowController gamePaneController;
+    private GameWindowController gameWindowController;
     private PlayerController playerController;
 
     private List<Field> possibleFields;
@@ -20,9 +20,9 @@ public class Game {
     private Move move;
     private Field currentField;
 
-    public Game(Main control, GameWindowController gamePaneController, PlayerController playerController) {
+    public Game(Main control, GameWindowController gameWindowController, PlayerController playerController) {
         this.control = control;
-        this.gamePaneController = gamePaneController;
+        this.gameWindowController = gameWindowController;
         this.playerController = playerController;
         possibleFields = new ArrayList<>();
         visitedFields = new ArrayList<>();
@@ -134,7 +134,7 @@ public class Game {
      */
     public void selectStone(Stone s) {
         if (move != null && move.getStone() == s && !move.isOutdated() && Main.playingField.getField(s.getIndexX(), s.getIndexY()) != currentField) {
-            gamePaneController.colorField();
+            gameWindowController.colorField();
             move.setOutdated(true);
             visitedFields.clear();
             currentField = null;
@@ -146,7 +146,7 @@ public class Game {
             move.addEnterField(f);
             possibleFields.clear();
             testFieldScope(f, s.getColor(), false, s.isSuperDame());
-            gamePaneController.highlightFields(possibleFields, move);
+            gameWindowController.highlightFields(possibleFields, move);
         }
         else  if (move != null && !move.isOutdated()) {
             Field f = Main.playingField.getField(s.getIndexX(), s.getIndexY());
@@ -184,12 +184,12 @@ public class Game {
                             move.addSkipField(Main.playingField.getField(x, y));
 
                             visitedFields.add(Main.playingField.getField(x, y));
-                            gamePaneController.colorField();
+                            gameWindowController.colorField();
                             possibleFields.clear();
 
                             testFieldScope(move.getEndField(), move.getStone().getColor(), true, move.getStone().isSuperDame());
                             if (!possibleFields.isEmpty()) {
-                                gamePaneController.highlightFields(possibleFields, move);
+                                gameWindowController.highlightFields(possibleFields, move);
                                 return;
                             }
                         }
@@ -224,8 +224,8 @@ public class Game {
      * @param move Player's move
      */
     private void makeMove(Move move) {
-        gamePaneController.colorField();
-        gamePaneController.moveToken(move);
+        gameWindowController.colorField();
+        gameWindowController.moveToken(move);
         move.update();
         testForSuperDame(move.getStone());
         possibleFields.clear();
@@ -238,8 +238,8 @@ public class Game {
         if (!testForWinner()) {
             move.setOutdated(true);
             playerController.changePlayer();
-            gamePaneController.updatePlayer();
-            playKI();
+            gameWindowController.updatePlayer();
+            playAI();
         }
     }
 
@@ -294,7 +294,7 @@ public class Game {
     /**
      * In SinglePlayer Mode an AI will be added , in Multiplayer nothing will be done.
      */
-    private void playKI() {
+    private void playAI() {
         if(playerController.isSinglePlayerGame() && !playerController.isCurrentPlayer1()) {
             try {
                 Move m = ((AI) playerController.getPlayer2()).getBestMove();

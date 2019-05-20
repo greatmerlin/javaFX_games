@@ -1,6 +1,7 @@
 package ffhs.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 /**
@@ -9,6 +10,22 @@ import javafx.scene.control.TextField;
  * */
 
 public class StartGameMenuController {
+
+    /**
+     * String for a 8 * 8 Field
+     */
+    private final String eight = "8 * 8";
+
+    /**
+     * String for a 10 * 10 Field
+     */
+    private final String ten = "10 * 10";
+
+    /**
+     * ComboBox, to choose the size of the Field (8x8 or 10x10).
+     */
+    @FXML
+    private ComboBox<String> comboBox_size;
 
     /**
      * Main Class Object
@@ -40,6 +57,17 @@ public class StartGameMenuController {
     private TextField textField_Player2;
 
     /**
+     * init the ComboBox.
+     * auto called with the Scene appearance
+     */
+    @FXML
+    private void initialize() {
+        comboBox_size.getItems().add(eight);
+        comboBox_size.getItems().add(ten);
+        comboBox_size.setValue(eight);
+    }
+
+    /**
      * starts a Single Player Game.
      * As a second player will be an AI initialized.
      */
@@ -61,6 +89,6 @@ public class StartGameMenuController {
      * PlayingField size = 10x10
      */
     public int getSize() {
-        return 10;
+        return comboBox_size.getValue().equals(eight) ? 8 : 10;
     }
 }
