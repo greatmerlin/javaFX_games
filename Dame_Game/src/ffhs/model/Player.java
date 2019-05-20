@@ -49,7 +49,7 @@ public class Player {
      */
     public Player(Color c, String name, int size) {
         this(c, name);
-        createStones();
+        createStones(size);
     }
 
     /**
@@ -58,41 +58,38 @@ public class Player {
      * @param name Player's name
      * @param c tokens Color.
      */
-    private void init(String name, Color c) {
+    private void init(String name, int size, Color c) {
         cName = name;
         cColor = c;
-        createStones();
+        createStones(size);
     }
 
     /**
      * creates a playing field with white and black tokens.
+     * @param size Playing Field's size
      */
-    private void createStones() {
-        int size= 10;
+    private void createStones(int size) {
         int x, y;
-        if (cColor == Color.BLACK){
+        if (cColor == Color.BLACK) {
             x = 0;
             y = 0;
-        }
-        else {
+        } else {
             y = size - (size / 2 - 1);
             if (y % 2 != 0) {
                 x = 1;
-            }
-            else {
+            } else {
                 x = 0;
             }
         }
-        int f = (int)((((double)size/4) - 0.5) * size);            //Anzahl Spielsteine pro Spieler abhängig von Feldgröße
+        int f = (int) ((((double) size / 4) - 0.5) * size);
         cStone = new Stone[f];
-        for (int i = 0; i < f; i++){
+        for (int i = 0; i < f; i++) {
             cStone[i] = new Stone(cColor, x, y, false);
-            if (( x += 2) >= size){
+            if ((x += 2) >= size) {
                 y += 1;
-                if((y % 2) != 0){
+                if ((y % 2) != 0) {
                     x = 1;
-                }
-                else {
+                } else {
                     x = 0;
                 }
             }
@@ -106,14 +103,14 @@ public class Player {
      * @param x x-coordinate token
      * @param y y-coordinate token
      */
-    public void replaceStone (int indexStone, int x, int y){
-        cStone[indexStone].setIndexX(x);
-        cStone[indexStone].setIndexY(y);
-    }
+        public void replaceStone (int indexStone, int x, int y) {
+            cStone[indexStone].setIndexX(x);
+            cStone[indexStone].setIndexY(y);
+        }
 
-    public Stone[] getStones() {
-        return cStone;
-    }
+        public Stone[] getStones() {
+            return cStone;
+        }
 
     /**
      * check how many tokens are still active

@@ -23,27 +23,23 @@ import java.util.Optional;
 
 public class Main extends Application {
 
-    private BorderPane menuBarPane;
-    private MenuBarController menuBarController;
-
-    private Parent startLayout;
-    private StartGameMenuController startGameMenuController;
-
     private Stage primaryStage;
-    private GameWindowController gameWindowController;
-
+    private Parent startLayout;
+    private Parent gameLayout;
+    private BorderPane menuLayout;
     private Stage rulesStage;
     private Stage aboutStage;
 
     public static PlayingField playingField;
+
+    private GameWindowController gamePaneController;
+    private StartGameMenuController startPaneController;
+    private MenuBarController menuPaneController;
     private PlayerController playerController;
+    private Game game;
 
     private Image king;
     private Image logo;
-
-    private Parent gameLayout;
-    private Game game;
-
 
     /**
      * Main Method starts the Application.
@@ -79,11 +75,11 @@ public class Main extends Application {
 
         playingField = new PlayingField();
         playerController = new PlayerController();
-        game = new Game(this, gameWindowController, playerController);
+        game = new Game(this, gamePaneController, playerController);
 
 //        primaryStage.setMaximized(true); //TODO : decide if you want it full screen or not.
-        primaryStage.setMinHeight(menuBarPane.getPrefHeight());
-        primaryStage.setMinWidth(menuBarPane.getPrefWidth());
+        primaryStage.setMinHeight(menuLayout.getPrefHeight());
+        primaryStage.setMinWidth(menuLayout.getPrefWidth());
 
         primaryStage.show();
 
@@ -99,12 +95,12 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/MenuBar.fxml"));
-            menuBarPane = loader.load();
+            menuLayout = loader.load();
 
-            menuBarController = loader.getController();
-            menuBarController.setObjects(this);
+            menuPaneController = loader.getController();
+            menuPaneController.setObjects(this);
 
-            primaryStage.setScene(new Scene(menuBarPane));
+            primaryStage.setScene(new Scene(menuLayout));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -122,8 +118,8 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("../view/startGameMenu.fxml"));
             startLayout = loader.load();
 
-            startGameMenuController = loader.getController();
-            startGameMenuController.setObjects(this);
+            startPaneController = loader.getController();
+            startPaneController.setObjects(this);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -135,9 +131,9 @@ public class Main extends Application {
      * The start Scene will be placed at the "Center" ({@link BorderPane -> center}) of the Menu Scene.
      */
     private void setStartLayout() {
-        menuBarPane.setCenter(startLayout);
+        menuLayout.setCenter(startLayout);
         this.primaryStage.setResizable(true);
-        menuBarController.disableReturnItem(true);
+        menuPaneController.disableReturnItem(true);
     }
 
     /**
@@ -220,12 +216,22 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/GameWindow.fxml"));
             gameLayout = loader.load();
-            gameWindowController = loader.getController();
-            gameWindowController.setObjects(this);
+            gamePaneController = loader.getController();
+            gamePaneController.setObjects(this);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * set the game Layout.
+     * the game layout will be at the ({@link BorderPane# center}) center.
+     */
+    private void setGameLayout() {
+        menuLayout.setCenter(gameLayout);
+        this.primaryStage.setResizable(false);
+        menuPaneController.disableReturnItem(false);
     }
 
     /**
@@ -240,11 +246,11 @@ public class Main extends Application {
      * @see GameWindowController
      */
     public void startGame(boolean ai, String name1, String name2) {
-        playingField.rebuild(startGameMenuController.getSize());
-        gameWindowController.buildPlayingField(startGameMenuController.getSize(), (int)primaryStage.getHeight() - 200, playingField);
-        playerController.init(ai, startGameMenuController.getSize(), name1, name2);
-        gameWindowController.createTokens(playerController.getPlayer1(), playerController.getPlayer2());
-        setStartLayout();
+        playingField.rebuild(startPaneController.getSize());
+        gamePaneController.buildPlayingField(startPaneController.getSize(), (int)primaryStage.getHeight() - 200, playingField);
+        playerController.init(ai, startPaneController.getSize(), name1, name2);
+        gamePaneController.createTokens(playerController.getPlayer1(), playerController.getPlayer2());
+        setGameLayout();
     }
 
     /**
@@ -284,7 +290,7 @@ public class Main extends Application {
      */
     public void returnToStart() {
         setStartLayout();
-        gameWindowController.clearField();
+        gamePaneController.clearField();
         game.reset();
     }
 
