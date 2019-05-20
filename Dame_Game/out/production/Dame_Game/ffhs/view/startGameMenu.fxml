@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
 <AnchorPane prefHeight="600.0" prefWidth="800.0"
             styleClass="ImageBackground" stylesheets="@styles.css"
             xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="ffhs.controller.StartGameMenuController">
@@ -22,16 +23,21 @@
         <VBox alignment="CENTER" layoutX="336.0" layoutY="43.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0"
               AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
             <children>
-                <Button mnemonicParsing="false"  text="Versus AI" />
-<!--                in the above button: onAction="#handleVersusAI"-->
-                <Button mnemonicParsing="false" text="Player Vs Player" />
-<!--                in the above button: onAction="#handlePVP"-->
+                <Button mnemonicParsing="false"  text="Versus AI" onAction="#handleVersusAI" />
+                <Button mnemonicParsing="false" text="Player Vs Player" onAction="#handlePVP" />
             </children>
         </VBox>
         <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="180.0" spacing="12.0"
               AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
             <children>
                 <Separator />
+                <Label styleClass="hLabel" text="Settings:" />
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <children>
+                        <Label text="Size:" />
+                        <ComboBox fx:id="comboBox_size" prefWidth="150.0" />
+                    </children>
+                </HBox>
                 <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="20.0">
                     <children>
                         <Label text="Player Names:" />
