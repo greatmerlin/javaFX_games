@@ -33,7 +33,7 @@ public class Main extends Application {
     public static PlayingField playingField;
 
     private GameWindowController gamePaneController;
-    private StartGameMenuController startPaneController;
+    private StartScreenController startPaneController;
     private MenuBarController menuPaneController;
     private PlayerController playerController;
     private Game game;
@@ -77,7 +77,7 @@ public class Main extends Application {
         playerController = new PlayerController();
         game = new Game(this, gamePaneController, playerController);
 
-//        primaryStage.setMaximized(true); //TODO : decide if you want it full screen or not.
+//        primaryStage.setMaximized(true);  //TODO : decide if you want it full screen or not.
         primaryStage.setMinHeight(menuLayout.getPrefHeight());
         primaryStage.setMinWidth(menuLayout.getPrefWidth());
 
@@ -115,7 +115,7 @@ public class Main extends Application {
     private void loadStartLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/startGameMenu.fxml"));
+            loader.setLocation(Main.class.getResource("../view/startScreen.fxml"));
             startLayout = loader.load();
 
             startPaneController = loader.getController();
@@ -133,7 +133,7 @@ public class Main extends Application {
     private void setStartLayout() {
         menuLayout.setCenter(startLayout);
         this.primaryStage.setResizable(true);
-        menuPaneController.disableReturnItem(true);
+        menuPaneController.disableBackMenuItem(true);
     }
 
     /**
@@ -146,7 +146,7 @@ public class Main extends Application {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/RulesWindow.fxml"));
+            loader.setLocation(Main.class.getResource("../view/RulesLayout.fxml"));
             Parent rulesScene = loader.load();
 
             rulesStage = new Stage(StageStyle.UTILITY);
@@ -155,7 +155,7 @@ public class Main extends Application {
             rulesStage.setScene(new Scene(rulesScene));
             rulesStage.sizeToScene();
 
-            ((RulesWindowController)loader.getController()).setObjects(rulesStage);
+            ((RulesLayoutController)loader.getController()).setObjects(rulesStage);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -180,7 +180,7 @@ public class Main extends Application {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/AboutWindow.fxml"));
+            loader.setLocation(Main.class.getResource("../view/AboutLayout.fxml"));
             Parent aboutPane = loader.load();
 
 
@@ -191,7 +191,7 @@ public class Main extends Application {
             aboutStage.setScene(new Scene(aboutPane));
             aboutStage.sizeToScene();
 
-            ((AboutWindowController)loader.getController()).setObjects(aboutStage);
+            ((AboutLayoutController)loader.getController()).setObjects(aboutStage);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -231,7 +231,7 @@ public class Main extends Application {
     private void setGameLayout() {
         menuLayout.setCenter(gameLayout);
         this.primaryStage.setResizable(false);
-        menuPaneController.disableReturnItem(false);
+        menuPaneController.disableBackMenuItem(false);
     }
 
     /**
@@ -246,9 +246,9 @@ public class Main extends Application {
      * @see GameWindowController
      */
     public void startGame(boolean ai, String name1, String name2) {
-        playingField.rebuild(startPaneController.getSize());
-        gamePaneController.buildPlayingField(startPaneController.getSize(), (int)primaryStage.getHeight() - 200, playingField);
-        playerController.init(ai, startPaneController.getSize(), name1, name2);
+        playingField.rebuild(startPaneController.getPlayingFieldSize());
+        gamePaneController.buildPlayingField(startPaneController.getPlayingFieldSize(), (int)primaryStage.getHeight() - 200, playingField);
+        playerController.init(ai, startPaneController.getPlayingFieldSize(), name1, name2);
         gamePaneController.createTokens(playerController.getPlayer1(), playerController.getPlayer2());
         setGameLayout();
     }
@@ -263,7 +263,7 @@ public class Main extends Application {
     public void winDialog(String name){
         Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
         dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.getDialogPane().getStylesheets().add(Main.class.getResource("../view/style.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(Main.class.getResource("../view/styles.css").toExternalForm());
         dialog.setHeaderText(name + " has won the Game! Now choose if you want to start the game again,\ngo back to the main Menu or close the game.");
 
         ButtonType restartButton = new ButtonType("restart");
@@ -288,7 +288,7 @@ public class Main extends Application {
     /**
      * breaks the current game and returns to the main menu.
      */
-    public void returnToStart() {
+    public void returnToStart() {  // TODO: fix the Bug and make it run
         setStartLayout();
         gamePaneController.clearField();
         game.reset();

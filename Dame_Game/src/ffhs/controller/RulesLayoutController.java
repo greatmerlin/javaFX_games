@@ -10,44 +10,40 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Control for the Rules Window
- *
+ * Controller for the Rules Window
  * */
 
-public class RulesWindowController {
+public class RulesLayoutController {
 
     /**
-     * The Rules Window
-     *
+     * The Rules Window (Stage)
      * */
     private Stage rulesStage;
 
     /**
      * TextArea to display the rules
-     *
      * */
     @FXML
     private TextArea rulesTextArea;
 
     /**
-     * Method, to hand over Objects.
-     *
-     * @param rules the rules Window
+     * Closes the Rules Window.
+     * Will be called when the "OK" button is pressed.
      */
-    public void setObjects(Stage rules) {
-        this.rulesStage = rules;
+    @FXML
+    private void close() {
+        rulesStage.close();
     }
 
     /**
      * Get the rules from the rules.txt to the textArea.
-     * It will be called during the init.
+     * It will be auto called with the Stage's appearance.
      */
     @FXML
     private void initialize() {
-
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(
-                    RulesWindowController.class
+                    RulesLayoutController.class
                             .getClassLoader()
                             .getResourceAsStream("resources/Rules.txt"), StandardCharsets.UTF_8));
             String line;
@@ -62,12 +58,10 @@ public class RulesWindowController {
     }
 
     /**
-     * Closes the Rules Window.
-     * Will be called when the "OK" button is pressed.
+     * Method, to hand over Objects.
+     * @param stage the rules Window (Stage)
      */
-    @FXML
-    private void close() {
-
-        rulesStage.close();
+    public void setObjects(Stage stage) {
+        this.rulesStage = stage;
     }
 }

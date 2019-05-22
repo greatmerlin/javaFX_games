@@ -7,23 +7,18 @@
 
 <BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
             stylesheets="@styles.css"
-            xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="ffhs.controller.MenuBarController">
+            xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
+            fx:controller="ffhs.controller.MenuBarController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem fx:id="menuItem_back" disable="true" mnemonicParsing="false" text="Back" />
-                        <MenuItem mnemonicParsing="false" text="Exit" onAction="#handleExit"/>
-                    </items>
+                <Menu text="File">
+                        <MenuItem fx:id="menuItemBack" disable="true" text="Back" />
+                        <MenuItem text="Exit" onAction="#handleExit"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Rules" onAction="#handleRules" />
-                        <MenuItem mnemonicParsing="false" text="About" onAction="#handleAbout" />
-                    </items>
+                        <MenuItem text="Rules" onAction="#handleRules" />
+                        <MenuItem text="About" onAction="#handleAbout" />
                 </Menu>
-            </menus>
         </MenuBar>
     </top>
 </BorderPane>

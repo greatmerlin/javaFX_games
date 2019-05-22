@@ -6,8 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
 /**
- * Controll for the Menu Bar
- *
+ * Controller for the Menu Bar
  * */
 
 public class MenuBarController {
@@ -15,18 +14,42 @@ public class MenuBarController {
     /**
      * Main Class Object
      * */
-    private Main control;
+    private Main mainClassObject;
 
     @FXML
-    private MenuItem menuItem_back;
+    private MenuItem menuItemBack;
+
+    /**
+     * handle the click to "Rules" {@link MenuItem}.
+     */
+    @FXML
+    private void handleRules() {
+        mainClassObject.showRulesWindow();
+    }
+
+    /**
+     * handle the click to "About" {@link MenuItem}.
+     * */
+    @FXML
+    private void handleAbout() {
+        mainClassObject.showAboutWindow();
+    }
+
+    /**
+     * handle pressing the "exit". Safe exit from the Game.
+     * */
+    @FXML
+    private void handleExit(ActionEvent event) {
+        Platform.exit();
+    }
 
     /**
      * Method to hand over objects.
      *
-     * @param control Main Class Object.
+     * @param mainClassObject Instance from the Class Main
      */
-    public void setObjects(Main control) {
-        this.control = control;
+    public void setObjects(Main mainClassObject) {
+        this.mainClassObject = mainClassObject;
     }
 
     /**
@@ -35,31 +58,9 @@ public class MenuBarController {
      *
      * @param disable Flag, if the {@link MenuItem} should be disabled or not.
      */
-    public void disableReturnItem(boolean disable) {
-        menuItem_back.setDisable(disable);
+    public void disableBackMenuItem(boolean disable) {
+        menuItemBack.setDisable(disable);
     }
 
-    /**
-     * handle the click to "Rules" {@link MenuItem}.
-     */
-    @FXML
-    private void handleRules() {
-        control.showRulesWindow();
-    }
 
-    /**
-     * handle the click to "About" {@link MenuItem}.
-     * */
-    @FXML
-    private void handleAbout() {
-        control.showAboutWindow();
-    }
-
-    /**
-     * handle the exit
-     * */
-    @FXML
-    private void handleExit(ActionEvent event) {
-        Platform.exit();
-    }
 }

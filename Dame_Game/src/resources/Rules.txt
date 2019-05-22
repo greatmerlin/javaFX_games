@@ -1,4 +1,4 @@
-Dame Game
+Draughts - Checkers
 
 Draughts (British English) or checkers (American English) is a group of strategy board games for two players which involve diagonal moves of uniform game pieces and mandatory captures by jumping over opponent pieces. Draughts developed from alquerque. The name derives from the verb to draw or to move. The interrnational draughts are being played on a 10x10 board.
 
