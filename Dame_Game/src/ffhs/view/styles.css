@@ -6,7 +6,7 @@
     -fx-accent: #ffcc00;
 }
 
-.background-bright {
+.backgroundBright {
     -fx-background-color: linear-gradient(#505050 80%, #808080 100%);
 }
 
@@ -148,17 +148,9 @@
     -fx-font-size: 15px;
 }
 
-/*.dialog-pane {*/
-/*    -fx-background-color: linear-gradient(derive(-fx-background, 30%), derive(-fx-background, 70%));*/
-/*}*/
-
 .alert.confirmation.dialog-pane {
     -fx-graphic: url("../../resources/checkers-bg.png");
 }
-
-/*.dialog-pane:header .header-panel .label {*/
-/*    -fx-font-size: 24px;*/
-/*}*/
 
 #title {
     -fx-font-size: 80px;
@@ -168,16 +160,16 @@
     -fx-effect: dropshadow(gaussian, black , 2, 0.0, 3, 3);
 }
 
-#nameOnTurn {
+#playerNameOnTurn {
     -fx-font-size: 30px;
     -fx-text-fill: #ffaa00;
 }
 
-#name {
+#playerNameNotOnTurn {
     -fx-font-size: 30px;
 }
 
-#status {
+#announcement {
     -fx-font-size: 24px;
-    -fx-text-fill: #ffaa00;
+    -fx-text-fill: #ff2a00;
 }

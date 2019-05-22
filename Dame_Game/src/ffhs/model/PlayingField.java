@@ -30,7 +30,7 @@ public class PlayingField {
                     temp = new Field(Color.BLACK, i, j);
                 }
                 else{
-                    temp = new Field(Color.WHITE, i, j);
+                    temp = new Field(Color.RED, i, j);
                 }
                 cField[i * FieldSize + j] = temp;
                 black = !black;
@@ -40,7 +40,6 @@ public class PlayingField {
 
     /**
      * generates a Field with another size.
-     *
      * @param fieldSize Field's size.
      */
     public void rebuild(int fieldSize) {
@@ -54,7 +53,6 @@ public class PlayingField {
 
     /**
      * returns a Field with specific coordinates
-     *
      * @param x x-Coordinate.
      * @param y y-Coordinate.
      * @return Field with the fitted coordinates.

@@ -5,5 +5,5 @@ package ffhs.model;
  */
 
 public enum Color {
-    WHITE, BLACK
+    RED, BLACK
 }

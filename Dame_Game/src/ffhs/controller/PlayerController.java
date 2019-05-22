@@ -4,9 +4,7 @@ import ffhs.model.*;
 import ffhs.model.Player;
 
 /**
- * Verwaltung von Spielerinformationen
- *
- * @author Alexander Hengsteler
+ * Controller for the Player Information
  */
 public class PlayerController {
 
@@ -17,25 +15,25 @@ public class PlayerController {
 
     public PlayerController() {}
 
-    public PlayerController(boolean ki, int size, String name1, String name2) {
-        init(ki, size, name1, name2);
+    public PlayerController(boolean ai, int size, String name1, String name2) {
+        init(ai, size, name1, name2);
     }
 
     /**
-     * Initialisiert das Spiel mit den angegebenen Parametern
-     * @param ki Gibt an, ob die KI benutzt wird (Singleplayer)
-     * @param size Größe des Spielfeldes
-     * @param name1 Name von Player1
-     * @param name2 Name von Player2
+     * initialize the game with the following parameters
+     * @param ai reveals if ai will be used(Singleplayer)
+     * @param size size of the Playing Field
+     * @param name1 Name of Player1
+     * @param name2 Name of Player2
      */
-    public void init(boolean ki, int size, String name1, String name2) {
-        singlePlayerGame = ki;
+    public void init(boolean ai, int size, String name1, String name2) {
+        singlePlayerGame = ai;
         player1 = new Player(Color.BLACK, name1.isEmpty() || name1.length() > 15 ? "Player 1" : name1, size);
-        if (!ki) {
-            player2 = new Player(Color.WHITE, name2.isEmpty() || name2.length() > 15 ? "Player 2" : name2, size);
+        if (!ai) {
+            player2 = new Player(Color.RED, name2.isEmpty() || name2.length() > 15 ? "Player 2" : name2, size);
         }
         else{
-            player2 = new AI(Color.WHITE, name2.isEmpty() || name2.length() > 15 ? "KI" : name2, size, player1);
+            player2 = new AI(Color.RED, name2.isEmpty() || name2.length() > 15 ? "Computer" : name2, size, player1);
         }
         currentPlayer1 = true;
     }
@@ -58,8 +56,8 @@ public class PlayerController {
     }
 
     /**
-     * Gibt den aktiven Spieler zurück
-     * @return Player aktiver Spieler
+     * retuns the active playes
+     * @return active Player
      */
     public Player getCurrentPlayer() {
         if (currentPlayer1) {
@@ -71,8 +69,8 @@ public class PlayerController {
     }
 
     /**
-     * Gibt den nicht aktiven Spieler zurück
-     * @return Player nicht aktiver Spieler
+     * returns the inactive player
+     * @return inactive Player
      */
     public Player getOtherPlayer() {
         if (!currentPlayer1) {
@@ -84,7 +82,7 @@ public class PlayerController {
     }
 
     /**
-     *  Wechselt den aktiven Spieler
+     *  changes the active players
      */
     public void changePlayer() {
         currentPlayer1 = !currentPlayer1;

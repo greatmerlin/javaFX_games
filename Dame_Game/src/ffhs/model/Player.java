@@ -12,7 +12,7 @@ public class Player {
     /**
      * all the tokens that belong to thee player
      */
-    private Stone cStone[];
+    private Token cToken[];
 
     /**
      * the Name of the Player
@@ -31,7 +31,6 @@ public class Player {
 
     /**
      * Constructor places Color and Player names.
-     *
      * @param c token's color.
      * @param name player's name.
      */
@@ -42,33 +41,31 @@ public class Player {
 
     /**
      * Constructor places Color and Names and generates the same tokens for both players.
-     *
-     * @param c Farbe der Steine.
-     * @param name Name des Spielers.
-     * @param size Größe des Spielfelds, um alle Steine zu generieren.
+     * @param c color of the tokens
+     * @param name Player's name
+     * @param size size of the Playing Field
      */
     public Player(Color c, String name, int size) {
         this(c, name);
-        createStones(size);
+        createTokens(size);
     }
 
     /**
      * initializes the players with Colors, Names and tokens
-     *
      * @param name Player's name
      * @param c tokens Color.
      */
     private void init(String name, int size, Color c) {
         cName = name;
         cColor = c;
-        createStones(size);
+        createTokens(size);
     }
 
     /**
      * creates a playing field with white and black tokens.
      * @param size Playing Field's size
      */
-    private void createStones(int size) {
+    private void createTokens(int size) {
         int x, y;
         if (cColor == Color.BLACK) {
             x = 0;
@@ -82,9 +79,9 @@ public class Player {
             }
         }
         int f = (int) ((((double) size / 4) - 0.5) * size);
-        cStone = new Stone[f];
+        cToken = new Token[f];
         for (int i = 0; i < f; i++) {
-            cStone[i] = new Stone(cColor, x, y, false);
+            cToken[i] = new Token(cColor, x, y, false);
             if ((x += 2) >= size) {
                 y += 1;
                 if ((y % 2) != 0) {
@@ -98,28 +95,26 @@ public class Player {
 
     /**
      * moves the token to another place in the playing field
-     *
      * @param indexStone token's number
      * @param x x-coordinate token
      * @param y y-coordinate token
      */
         public void replaceStone (int indexStone, int x, int y) {
-            cStone[indexStone].setIndexX(x);
-            cStone[indexStone].setIndexY(y);
+            cToken[indexStone].setIndexX(x);
+            cToken[indexStone].setIndexY(y);
         }
 
-        public Stone[] getStones() {
-            return cStone;
+        public Token[] getTokens() {
+            return cToken;
         }
 
     /**
      * check how many tokens are still active
-     *
      * @return number of the active tokens (not hit)
      */
     public int getActiveStones() {
         int value = 0;
-        for (Stone s : getStones()) {
+        for (Token s : getTokens()) {
             if (!s.isEliminated()) {
                 value++;
             }
@@ -137,20 +132,19 @@ public class Player {
 
     public Color getEnemyColor(){
         if (cColor.equals(Color.BLACK)){
-            return Color.WHITE;
+            return Color.RED;
         }
         return Color.BLACK;
     }
 
     /**
      * Searches the eligible token, for the clicked Node.
-     *
      * @param n clicked Circle
      * @return token at that Node
      */
-    public Stone getStoneOfClickedCircle(Node n) {
-        for (Stone s : cStone) {
-            if (s.getcCirc().equals(n)) {
+    public Token getStoneOfClickedCircle(Node n) {
+        for (Token s : cToken) {
+            if (s.getNodeCircle().equals(n)) {
                 return s;
             }
         }
@@ -159,13 +153,12 @@ public class Player {
 
     /**
      *returns if the player has a token with th fitting coordinates.
-     *
      * @param x x-Coordinate.
      * @param y y-Coordinate.
      * @return {@code true}, if the player has a token with these coordinates
      */
-    public boolean hasStoneAt(int x, int y) {
-        for (Stone s : cStone) {
+    public boolean hasTokenAt(int x, int y) {
+        for (Token s : cToken) {
             if (s.getIndexX() == x && s.getIndexY() == y && !s.isEliminated()) {
                 return true;
             }
@@ -175,21 +168,17 @@ public class Player {
 
     /**
      * returns the token with the fitting coordinates
-     *
      * @param x x-Coordinate.
      * @param y y-Coordinate.
      * @return token with the fitting coordinates.
-     * @see #hasStoneAt(int, int)
+     * @see #hasTokenAt(int, int)
      */
-    public Stone getStoneAt(int x, int y) {
-        for (Stone s : cStone) {
+    public Token getTokenAt(int x, int y) {
+        for (Token s : cToken) {
             if (s.getIndexX() == x && s.getIndexY() == y && !s.isEliminated()) {
                 return s;
             }
         }
         return null;
     }
-
-
-
 }

@@ -55,11 +55,17 @@ public class MenuBarController {
     /**
      * Set the {@link MenuItem} "Back" as enabled/disabled.
      * At the start Scene the {@link MenuItem} should be disabled.
-     *
      * @param disable Flag, if the {@link MenuItem} should be disabled or not.
      */
     public void disableBackMenuItem(boolean disable) {
         menuItemBack.setDisable(disable);
+    }
+
+    /**
+     * By pressing the {@link MenuItem} "Return", returns the user to the main menu.
+     * */
+    public void handleBack(){
+        mainClassObject.returnToStart();
     }
 
 

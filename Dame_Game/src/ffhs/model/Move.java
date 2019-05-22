@@ -8,7 +8,7 @@ import java.util.Vector;
  */
 public class Move {
 
-    private Stone stone;
+    private Token token;
     private Vector<Field> enteredFields;
     private Vector<Field> skippedFields;
     private int index;
@@ -26,12 +26,11 @@ public class Move {
 
     /**
      * initializes the Move same with a token.
-     *
-     * @param s chosen token.
+     * @param t chosen token.
      */
-    public Move(Stone s) {
+    public Move(Token t) {
         this();
-        stone = s;
+        token = t;
         index = 1;
         outdated = false;
     }
@@ -39,11 +38,10 @@ public class Move {
     /**
      * initializes the Move with a token.
      * the data known until now will be ignored.
-     *
-     * @param s chosen token.
+     * @param t chosen token.
      */
-    public void init(Stone s) {
-        stone = s;
+    public void init(Token t) {
+        token = t;
         enteredFields.clear();
         skippedFields.clear();
         index = 1;
@@ -54,7 +52,6 @@ public class Move {
      * set the Flag {@link #outdated}.
      * This Flag means, that the move is OLD.
      * That way, the token can be chosen once again.
-     *
      * @param outdated Flag is old
      * @see #isOutdated()
      */
@@ -64,7 +61,6 @@ public class Move {
 
     /**
      * returns the Flag {@link #outdated}.
-     *
      * @return Flag old
      * @see #setOutdated(boolean)
      */
@@ -74,19 +70,17 @@ public class Move {
 
     /**
      * This token will be chosen for the move.
-     *
      * @return chosen token
      */
-    public Stone getStone() {
-        return stone;
+    public Token getToken() {
+        return token;
     }
 
     /**
      * Returns the first field from the visited fields.
      * It is the field that the token was at the start.
      * Returns {@code null} , if the list is empty.
-     *
-     * @return Startfeld, auf dem der Stein anfangs lag.
+     * @return Start Field
      */
     public Field getFirstField() {
         if (enteredFields != null && !enteredFields.isEmpty()) {
@@ -97,7 +91,6 @@ public class Move {
 
     /**
      * Returns the last visited field.
-     *
      * @return End-Field from the token.
      */
     public Field getEndField() {
@@ -110,7 +103,6 @@ public class Move {
     /**
      * Returns the pre-last field.
      * The token that got hit, shoudl be between the Last-Field and the End-field.
-     *
      * @return pre-last Field.
      * @see ffhs.controller.Game #selectField(Field)
      */
@@ -134,7 +126,6 @@ public class Move {
 
     /**
      * Returns the field, in which the token was until now ({@link #index} - 1)
-     *
      * @return origin Field.
      */
     public Field getCurrentField() {
@@ -144,7 +135,6 @@ public class Move {
     /**
      * increases the {@link #index}.
      * after the index increase, the  {@code true} will be returns. Otherwise {@code false}.
-     *
      * @return Flag, if there is a next field.
      */
     public boolean nextField() {
@@ -157,7 +147,6 @@ public class Move {
 
     /**
      * adds a field to the visited (entered) fields. ({@link #enteredFields}).
-     *
      * @param f Field, that the player chose and visited(entered).
      */
     public void addEnterField(Field f) {
@@ -168,7 +157,6 @@ public class Move {
      * adds a field to the jumped(skipped) fields ({@link #skippedFields}).
      * In this field an opponent should be.
      * The opponent's token must also be removed.
-     *
      * @param f skipped field with a token.
      */
     public void addSkipField(List<Field> f) {
@@ -177,7 +165,6 @@ public class Move {
 
     /**
      * adds a list from the visited fields.
-     *
      * @param f List with fields, which the token should visit.
      */
     public void addEnterField(List<Field> f) {
@@ -188,8 +175,7 @@ public class Move {
      * adds the visited fields.
      * here should be an opponent.
      * the token from the opponent should be removed.
-     *
-     * @param f lsit with fields, that skipped an opponent(token) and are there.
+     * @param f list with fields, that skipped an opponent(token) and are there.
      */
     public void addSkipField(Field f) {
         skippedFields.add(f);
@@ -197,7 +183,6 @@ public class Move {
 
     /**
      * returns a list with all visited fields.
-     *
      * @return list with fields that the tokens have visited.
      */
     public List<Field> getEnteredFields() {
@@ -206,7 +191,6 @@ public class Move {
 
     /**
      * returns a list with the skipped fields.
-     *
      * @return returns a list with the skipped fields
      */
     public List<Field> getSkipedFields() {
@@ -216,7 +200,6 @@ public class Move {
     /**
      * returns the first skipped token.
      * The next field that will be skipped.
-     *
      * @return the next field that will be skipped.
      * @see #nextSkipedField()
      */
@@ -231,7 +214,6 @@ public class Move {
      * removes the first skipped field.
      * it will be activated when this field was skipped.
      * The next field will be named 'FirstSkippedField'
-     *
      * @see #getFirstSkipedField()
      */
     public void nextSkipedField() {
@@ -246,8 +228,8 @@ public class Move {
      * Set the coordinates of the token to the end-Field coordinates.
      */
     public void update() {
-        stone.setIndexX(getEndField().getIndexX());
-        stone.setIndexY(getEndField().getIndexY());
+        token.setIndexX(getEndField().getIndexX());
+        token.setIndexY(getEndField().getIndexY());
     }
 
 }

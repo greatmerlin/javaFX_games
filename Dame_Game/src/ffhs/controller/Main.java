@@ -18,7 +18,6 @@ import java.util.Optional;
 
 /**
  * @author Baxevanos Theologos
- *
  * */
 
 public class Main extends Application {
@@ -32,7 +31,7 @@ public class Main extends Application {
 
     public static PlayingField playingField;
 
-    private GameWindowController gamePaneController;
+    private GameLayoutController gamePaneController;
     private StartScreenController startPaneController;
     private MenuBarController menuPaneController;
     private PlayerController playerController;
@@ -43,18 +42,15 @@ public class Main extends Application {
 
     /**
      * Main Method starts the Application.
-     *
      * @param args Arguments with which the program starts.
      */
     public static void main(String[] args) {
-
         launch(args);
     }
 
     /**
      * loads the main Stage and sets up the main window.
      * Initialize every game object
-     *
      * @param primaryStage the main Window
      */
     @Override
@@ -82,7 +78,6 @@ public class Main extends Application {
         primaryStage.setMinWidth(menuLayout.getPrefWidth());
 
         primaryStage.show();
-
     }
 
     /**
@@ -110,7 +105,6 @@ public class Main extends Application {
     /**
      * loads the start window
      * At the start window, a player can choose the versus AI or the PVP mode
-     *
      */
     private void loadStartLayout() {
         try {
@@ -143,7 +137,6 @@ public class Main extends Application {
      * The Rules WIndow is a Utility-Window ({@link StageStyle}).
      */
     private void loadRulesWindow() {
-
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/RulesLayout.fxml"));
@@ -164,7 +157,6 @@ public class Main extends Application {
 
     /**
      * open the Rules Window.
-     *
      */
     public void showRulesWindow() {
         rulesStage.show();
@@ -177,12 +169,10 @@ public class Main extends Application {
      * it remains at the front stage.
      */
     private void loadAboutWindow() {
-
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("../view/AboutLayout.fxml"));
             Parent aboutPane = loader.load();
-
 
             aboutStage = new Stage(StageStyle.UTILITY);
             aboutStage.setAlwaysOnTop(true);
@@ -200,10 +190,8 @@ public class Main extends Application {
 
     /**
      * Opens the About Window
-     *
      * */
     public void showAboutWindow() {
-
         aboutStage.show();
     }
 
@@ -214,7 +202,7 @@ public class Main extends Application {
     private void loadGameLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/GameWindow.fxml"));
+            loader.setLocation(Main.class.getResource("../view/GameLayout.fxml"));
             gameLayout = loader.load();
             gamePaneController = loader.getController();
             gamePaneController.setObjects(this);
@@ -239,11 +227,10 @@ public class Main extends Application {
      * A new PLayingField will be generated and given to the Controller.
      * The Controller will give it "flesh and bones". The PlayerController will initialize and generate the 2 players.
      * The new players will be given again to the game controller to get their tokens.
-     *
-     * @param ai returns if the game is single- (ki = true) or Multiplayer
+     * @param ai returns if the game is single- (ai = true) or Multiplayer
      * @param name1 The Name from Player 1
      * @param name2 The Name from Player 2
-     * @see GameWindowController
+     * @see GameLayoutController
      */
     public void startGame(boolean ai, String name1, String name2) {
         playingField.rebuild(startPaneController.getPlayingFieldSize());
@@ -257,7 +244,6 @@ public class Main extends Application {
      * Shows a window when a player won.
      * The player will have a chance to start the game again,
      * to go to the main menu or to end the game.
-     *
      * @param name Name of the player that won the game.
      */
     public void winDialog(String name){
@@ -282,21 +268,19 @@ public class Main extends Application {
         else {
             Platform.exit();
         }
-
     }
 
     /**
      * breaks the current game and returns to the main menu.
      */
-    public void returnToStart() {  // TODO: fix the Bug and make it run
+    public void returnToStart() {
         setStartLayout();
         gamePaneController.clearField();
         game.reset();
     }
 
     /**
-     * returns an Object from Class PlayerControllers.
-     *
+     * returns an Object from the Class PlayerControllers.
      * @return PlayerController
      */
     public PlayerController getPlayerController() {
@@ -304,8 +288,7 @@ public class Main extends Application {
     }
 
     /**
-     * return an Object from Class Game.
-     *
+     * return an Object from the Class Game.
      * @return Game
      */
     public Game getGame() {
@@ -313,11 +296,10 @@ public class Main extends Application {
     }
 
     /**
-     * returns the SuperDame/KING/Queen Image.
-     *
-     * @return Image SuperDame/KING/QUEEN
+     * returns the King Image.
+     * @return Image King
      */
-    public Image getSuperDameImage() {
+    public Image getKingImage() {
         return king;
     }
 

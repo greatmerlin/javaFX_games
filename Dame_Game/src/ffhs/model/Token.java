@@ -6,47 +6,46 @@ import javafx.scene.shape.Circle;
 /**
  * saves the data for a token
  * A token consists of: Color, Coordinates,
- * superDame (yes/no), Status (eliminated yes/no),
+ * King (yes/no), Status (eliminated yes/no),
  * and Circle.
  */
-public class Stone {
+public class Token {
 
     private int indexX , indexY;
     private boolean eliminated;
-    private Color cColor;
-    private boolean superDame;
-    private Node cCirc;
+    private Color circleColor;
+    private boolean king;
+    private Node nodeCircle;
 
-    public Stone(Color c, int x, int y, boolean superD){
-        cColor = c;
+    public Token(Color c, int x, int y, boolean king){
+        circleColor = c;
         indexX = x;
         indexY = y;
-        superDame = superD;
+        this.king = king;
         eliminated = false;
-        cCirc = new Circle();
+        nodeCircle = new Circle();
     }
 
-    public Node getcCirc(){
-        return cCirc;
+    public Node getNodeCircle(){
+        return nodeCircle;
     }
 
     /**
      * Circle to Node
-     * differentiate normal tokens from the "queen"(= superDame)
-     *
+     * differentiate normal tokens from the king
      * @param n new graphical token
      */
     public void changeNode(Node n) {
-        cCirc = n;
+        nodeCircle = n;
     }
     public Color getColor(){
-        return cColor;
+        return circleColor;
     }
-    public boolean isSuperDame(){
-        return superDame;
+    public boolean isKing(){
+        return king;
     }
-    public void setSuperDame(){
-        superDame = true;
+    public void setKing(){
+        king = true;
     }
     public int getIndexX(){
         return indexX;

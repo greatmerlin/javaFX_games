@@ -9,7 +9,7 @@ import java.util.*;
 public class CrossedFields extends Move{
     private int turnDuration;
 
-    public CrossedFields(int turnDuration, Stone s){
+    public CrossedFields(int turnDuration, Token s){
         super(s);
         this.turnDuration = turnDuration;
     }
@@ -39,14 +39,12 @@ public class CrossedFields extends Move{
         System.out.println(toString());
     }
 
-
     /**
      * From a possible moves list,  a random turn with maximum duration will be chosen.
-     *
-     * @param turns Liste mit möglichen Zügen.
-     * @return zufälliger Zug mit maximaler länge.
+     * @param turns list with possible turns.
+     * @return random turn with maximum duration.
      */
-    public static CrossedFields getBestZug(List<CrossedFields> turns){
+    public static CrossedFields getBestTurn(List<CrossedFields> turns){
         if(turns != null) {
             if (turns.size() > 0) {
                 //the highest duration turns will be searched and a random move will be chosen.
@@ -68,6 +66,4 @@ public class CrossedFields extends Move{
         }
         return null;
     }
-
-
 }

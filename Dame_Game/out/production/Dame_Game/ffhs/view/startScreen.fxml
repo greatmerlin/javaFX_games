@@ -21,8 +21,8 @@
               AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="20.0"
               AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">
                 <Label styleClass="labelSingleMulti" text="Choose your Game Style:" />
-                <Button text="Single Player" onAction="#handleVersusAI" />
-                <Button text="Multiplayer" onAction="#handlePVP" />
+                <Button text="Single Player" onAction="#handleSinglePlayer" />
+                <Button text="Multiplayer" onAction="#handleMultiplayer" />
         </VBox>
         <VBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="180.0" spacing="12.0"
               AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

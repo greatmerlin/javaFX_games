@@ -12,7 +12,7 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
                 <Menu text="File">
-                        <MenuItem fx:id="menuItemBack" disable="true" text="Back" />
+                        <MenuItem fx:id="menuItemBack" disable="true" text="Back" onAction="#handleBack" />
                         <MenuItem text="Exit" onAction="#handleExit"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
