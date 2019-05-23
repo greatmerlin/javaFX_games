@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
+            fx:controller="ffhs.controller.GameLayoutController">
+    <center>
+        <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
+                <Pane fx:id="playingField" />
+        </VBox>
+    </center>
+    <left>
+        <VBox alignment="TOP_CENTER" minWidth="131.0" spacing="10.0" BorderPane.alignment="CENTER">
+                <Label id="playerNameOnTurn" fx:id="labelPlayer1" text="Player 1" />
+                <Pane fx:id="panePlayer1RemovedTokens"/>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+            <padding>
+                <Insets left="10.0" right="10.0" top="20.0" />
+            </padding>
+        </VBox>
+    </left>
+    <right>
+        <VBox alignment="TOP_CENTER" minWidth="131.0" spacing="10.0" BorderPane.alignment="CENTER">
+                <Label id="playerNameNotOnTurn" fx:id="labelPlayer2" text="Player 2" />
+                <Pane fx:id="panePlayer2RemovedTokens"/>
+            <padding>
+                <Insets left="10.0" right="10.0" top="20.0" />
+            </padding>
+        </VBox>
+    </right>
+    <top>
+        <VBox alignment="TOP_CENTER" styleClass="backgroundBright" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+                <Label id="announcement" fx:id="labelAnnouncements"/>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+    <padding>
+        <Insets top="10.0" />
+    </padding>
+        </VBox>
+    </top>
+</BorderPane>

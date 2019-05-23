@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane prefHeight="600.0" prefWidth="500.0" stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/"
+            fx:controller="ffhs.controller.RulesLayoutController">
+        <TextArea fx:id="rulesTextArea"
+                  editable="false" focusTraversable="false" layoutX="14.0" layoutY="14.0" wrapText="true"
+                  AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="14.0"
+                  AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+        <Button layoutX="434.0" layoutY="561.0"
+                text="OK" onAction="#close"
+                AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+</AnchorPane>
